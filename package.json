@@ -1,0 +1,21 @@
+{
+  "name": "projet-final",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "setup": "npm i && npm --prefix ./client i && npm --prefix ./api i",
+    "dev": "concurrently -n front,back -c green,yellow -t \"HH:mm:ss\" -p \"{name} {time}\" \"npm --prefix ./client run dev\" \"npm --prefix ./api run dev\"",
+    "dev-front": "npm --prefix ./client run dev",
+    "dev-back": "npm --prefix ./api run dev"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "devDependencies": {
+    "cypress": "^13.13.1"
+  }
+}
