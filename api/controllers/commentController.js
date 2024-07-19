@@ -3,7 +3,7 @@ const commentModel = require("../models/commentModel");
 const commentController = {
   createComment: async (req, res) => {
     try {
-      const result = await commentModel.createComment(req.body);
+      const result = await commentModel.createComment(req.payload, req.body);
       res.status(201).json({ success: true, status: 201, data: result });
     } catch (error) {
       res
@@ -14,7 +14,7 @@ const commentController = {
 
   getAllComments: async (req, res) => {
     try {
-      const comments = await commentModel.getAllComments();
+      const comments = await commentModel.getCommentWithArticleAndUser();
       res.status(200).json({ success: true, status: 200, data: comments });
     } catch (error) {
       res
@@ -29,7 +29,7 @@ const commentController = {
       if (!comment) {
         return res
           .status(404)
-          .json({ success: false, message: "Comment not found" });
+          .json({ success: false, status: 404, message: "Comment not found" });
       }
       res.status(200).json({ success: true, status: 200, data: comment });
     } catch (error) {
@@ -43,6 +43,7 @@ const commentController = {
     try {
       const result = await commentModel.updateCommentById(
         req.params.id,
+        req.payload,
         req.body
       );
       if (result.affectedRows === 0) {
@@ -64,7 +65,10 @@ const commentController = {
 
   deleteCommentById: async (req, res) => {
     try {
-      const result = await commentModel.deleteCommentById(req.params.id);
+      const result = await commentModel.deleteCommentById(
+        req.params.id,
+        req.payload
+      );
       if (result.affectedRows === 0) {
         return res
           .status(404)
@@ -75,17 +79,6 @@ const commentController = {
         status: 200,
         message: "Comment deleted successfully",
       });
-    } catch (error) {
-      res
-        .status(500)
-        .json({ success: false, status: 500, message: error.message });
-    }
-  },
-  getCommentWithArticleAndComment: async (req, res) => {
-    try {
-      const comments = await commentModel.getCommentWithArticleAndComment();
-
-      res.status(200).json({ success: true, status: 200, data: comments });
     } catch (error) {
       res
         .status(500)

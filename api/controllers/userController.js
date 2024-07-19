@@ -56,11 +56,12 @@ const userController = {
   addUser: async (req, res) => {
     try {
       const user = await userModel.getUserByEmail(req.body.email);
-      if (user.length) {
+      console.log("user :>> ", user.length);
+      if (user.length !== 0) {
         res.status(409).json({
           success: false,
           status: 409,
-          message: `cet email ${email} est déjà utilisé par un autre utlisateur !`,
+          message: `cet email ${user[0].email} est déjà utilisé par un autre utlisateur !`,
         });
       } else {
         const results = await userModel.addUser(req.body);

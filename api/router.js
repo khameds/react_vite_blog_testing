@@ -117,9 +117,5 @@ router.delete(
   verifyToken,
   commentController.deleteCommentById
 );
-// get comment with user and articles
-router.get(
-  "/comments/details",
-  commentController.getCommentWithArticleAndComment
-);
+
 module.exports = router;

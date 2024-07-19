@@ -11,7 +11,7 @@ const articleModel = {
   },
   getAllArticles: async () => {
     const query = `
-    SELECT a.title, u.firstname AS user_firstname, u.lastname AS user_lastname, u.email AS user_email, c.name AS category_name
+    SELECT a.id, a.title, u.firstname AS user_firstname, u.lastname AS user_lastname, u.email AS user_email, c.name AS category_name
     FROM article a
     JOIN user u ON a.user_id = u.id
     JOIN category c ON a.category_id = c.id

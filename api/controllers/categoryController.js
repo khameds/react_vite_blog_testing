@@ -26,9 +26,11 @@ const categoryController = {
   getAllCategories: async (req, res) => {
     try {
       const categories = await categoryModel.getAllCategories();
-      res.status(200).json({ success: true, data: categories });
+      res.status(200).json({ success: true, status: 200, data: categories });
     } catch (error) {
-      res.status(500).json({ success: false, message: error.message });
+      res
+        .status(500)
+        .json({ success: false, status: 500, message: error.message });
     }
   },
 
@@ -40,9 +42,11 @@ const categoryController = {
           .status(404)
           .json({ success: false, message: "Category not found" });
       }
-      res.status(200).json({ success: true, data: category });
+      res.status(200).json({ success: true, status: 200, data: category });
     } catch (error) {
-      res.status(500).json({ success: false, message: error.message });
+      res
+        .status(500)
+        .json({ success: false, status: 500, message: error.message });
     }
   },
 
@@ -55,13 +59,17 @@ const categoryController = {
       if (result.affectedRows === 0) {
         return res
           .status(404)
-          .json({ success: false, message: "Category not found" });
+          .json({ success: false, status: 404, message: "Category not found" });
       }
-      res
-        .status(200)
-        .json({ success: true, message: "Category updated successfully" });
+      res.status(200).json({
+        success: true,
+        status: 200,
+        message: "Category updated successfully",
+      });
     } catch (error) {
-      res.status(500).json({ success: false, message: error.message });
+      res
+        .status(500)
+        .json({ success: false, status: 500, message: error.message });
     }
   },
 
@@ -73,11 +81,15 @@ const categoryController = {
           .status(404)
           .json({ success: false, message: "Category not found" });
       }
-      res
-        .status(200)
-        .json({ success: true, message: "Category deleted successfully" });
+      res.status(200).json({
+        success: true,
+        status: 200,
+        message: "Category deleted successfully",
+      });
     } catch (error) {
-      res.status(500).json({ success: false, message: error.message });
+      res
+        .status(500)
+        .json({ success: false, status: 500, message: error.message });
     }
   },
 };

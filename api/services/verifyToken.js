@@ -5,13 +5,22 @@ const verifyToken = (req, res, next) => {
   try {
     const tokenInHeaders = req.get("Authorization");
     if (!tokenInHeaders) {
-      res.status(401).send("pas de token");
+      res.status(401).json({
+        success: false,
+        status: 401,
+        message:
+          "Vous n'êtes pas authorisé à realiser cette action, Connectz-vous ! ",
+      });
     }
 
     const [type, token] = tokenInHeaders.split(" ");
 
     if (type !== "Bearer") {
-      res.status(401).send("le token doit etre de type ....");
+      res.status(401).json({
+        success: false,
+        status: 401,
+        message: "Erreur d'authentification, vérifier le type de token",
+      });
     }
     // de verifier le token
     const { payload } = jwt.verify(token, process.env.SECRET_KEY_JWT);
@@ -19,7 +28,11 @@ const verifyToken = (req, res, next) => {
 
     next();
   } catch (error) {
-    res.status(500).send(error);
+    res.status(500).json({
+      success: false,
+      status: 500,
+      message: error.message,
+    });
   }
 };
 
