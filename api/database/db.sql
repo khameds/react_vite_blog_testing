@@ -1,9 +1,11 @@
-ALTER TABLE article DROP FOREIGN KEY fk_article_user;
-ALTER TABLE comment DROP FOREIGN KEY fk_user_comment;
+SET FOREIGN_KEY_CHECKS = 0;
+
 DROP TABLE if exists user;
 DROP TABLE if exists comment;
 DROP TABLE if exists article;
 DROP TABLE if exists category;
+
+SET FOREIGN_KEY_CHECKS = 1;
 CREATE TABLE user (
     id INT PRIMARY KEY auto_increment,
     firstname VARCHAR(50) NOT NULL,
