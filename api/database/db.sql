@@ -1,3 +1,5 @@
+ALTER TABLE article DROP FOREIGN KEY fk_article_user;
+ALTER TABLE comment DROP FOREIGN KEY fk_user_comment;
 DROP TABLE if exists user;
 DROP TABLE if exists comment;
 DROP TABLE if exists article;
