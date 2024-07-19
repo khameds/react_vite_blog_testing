@@ -39,7 +39,7 @@ jobs:
         mysql user: smail
         mysql password: d8r8y #TODO out it in repo secrets
           
-    - run: npm ci
+    - run: npm install
     - run: npm run setup --if-present
     - run: npm run dev --if-present
     - run: npm run test --if-present
