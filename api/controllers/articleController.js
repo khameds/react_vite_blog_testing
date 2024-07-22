@@ -91,6 +91,19 @@ const articleController = {
         .json({ success: false, status: 500, message: error.message });
     }
   },
+  getArticleCount: async (req, res) => {
+    try {
+      const count = await articleModel.getArticleCount(req.payload);
+
+      res
+        .status(200)
+        .json({ success: true, status: 200, data: count[0]["article"] });
+    } catch (error) {
+      res
+        .status(500)
+        .json({ success: false, status: 500, message: error.message });
+    }
+  },
 };
 
 module.exports = articleController;

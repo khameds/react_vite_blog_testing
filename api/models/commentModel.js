@@ -16,6 +16,7 @@ const commentModel = {
         a.id AS article_id,
         a.title AS article_title,
         a.description AS article_description,
+        a.user_id AS userId,
           JSON_ARRAYAGG(
           JSON_OBJECT(
             'comment_id', c.id,
@@ -23,7 +24,11 @@ const commentModel = {
             'comment_created_at', c.created_at,
             'comment_updated_at', c.updated_at,
             'user_id', u.id,
-            'user_info', CONCAT(u.firstname, ' ', u.lastname)
+            'user_info', CONCAT(u.firstname, ' ', u.lastname),
+            'user_pseudo', u.pseudo,
+            'user_email', u.email,
+            'user_status', u.status,
+            'user_avatar', u.avatar
           )
         ) AS comments
       FROM
@@ -59,6 +64,13 @@ const commentModel = {
     const [result] = await db.query(
       "DELETE FROM comment WHERE id = ? And user_id=?",
       [id, user_id]
+    );
+    return result;
+  },
+  getCommentCount: async (userId) => {
+    const [result] = await db.query(
+      "SELECT COUNT(*) as count FROM comment WHERE user_id = ?",
+      [userId]
     );
     return result;
   },

@@ -85,6 +85,18 @@ const commentController = {
         .json({ success: false, status: 500, message: error.message });
     }
   },
+  getCommentCount: async (req, res) => {
+    try {
+      const count = await commentModel.getCommentCount(req.payload);
+      res
+        .status(200)
+        .json({ success: true, status: 200, data: count[0]["count"] });
+    } catch (error) {
+      res
+        .status(500)
+        .json({ success: false, status: 500, message: error.message });
+    }
+  },
 };
 
 module.exports = commentController;

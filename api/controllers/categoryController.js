@@ -40,7 +40,7 @@ const categoryController = {
       if (!category) {
         return res
           .status(404)
-          .json({ success: false, message: "Category not found" });
+          .json({ success: false, status: 404, message: "Category not found" });
       }
       res.status(200).json({ success: true, status: 200, data: category });
     } catch (error) {
@@ -52,20 +52,41 @@ const categoryController = {
 
   updateCategoryById: async (req, res) => {
     try {
-      const result = await categoryModel.updateCategoryById(
-        req.params.id,
-        req.body
-      );
-      if (result.affectedRows === 0) {
+      const categoryRegex = /^[a-zA-Z]{3,}$/;
+      const { name } = req.body;
+      const category = await categoryModel.getCategoryById(req.params.id);
+      if (!category) {
         return res
           .status(404)
           .json({ success: false, status: 404, message: "Category not found" });
       }
-      res.status(200).json({
-        success: true,
-        status: 200,
-        message: "Category updated successfully",
-      });
+
+      if (name.match(categoryRegex)) {
+        const result = await categoryModel.updateCategoryById(
+          req.params.id,
+          req.body
+        );
+
+        if (result.affectedRows === 0) {
+          return res.status(404).json({
+            success: false,
+            status: 404,
+            message: "Category not found",
+          });
+        }
+        res.status(200).json({
+          success: true,
+          status: 200,
+          message: "Category updated successfully",
+        });
+      } else {
+        res.status(401).json({
+          success: false,
+          status: 401,
+          message:
+            "Le titre doit avoir au minimum 3 lettres, sans chiffres ni caractères spéciaux",
+        });
+      }
     } catch (error) {
       res
         .status(500)
@@ -75,11 +96,17 @@ const categoryController = {
 
   deleteCategoryById: async (req, res) => {
     try {
+      const category = await categoryModel.getCategoryById(req.params.id);
+      if (!category) {
+        return res
+          .status(404)
+          .json({ success: false, status: 404, message: "Category not found" });
+      }
       const result = await categoryModel.deleteCategoryById(req.params.id);
       if (result.affectedRows === 0) {
         return res
           .status(404)
-          .json({ success: false, message: "Category not found" });
+          .json({ success: false, status: 404, message: "Category not found" });
       }
       res.status(200).json({
         success: true,

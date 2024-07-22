@@ -68,6 +68,12 @@ router.get(
   verifyToken,
   articleController.getAllArticlesByUser
 );
+// get article count by user
+router.get(
+  "/articles/users/count",
+  verifyToken,
+  articleController.getArticleCount
+);
 
 // Get an article by ID
 router.get("/articles/:id", articleController.getArticleById);
@@ -104,7 +110,12 @@ router.post("/comments", verifyToken, commentController.createComment);
 
 // Get all comments
 router.get("/comments", commentController.getAllComments);
-
+// get comment count by user
+router.get(
+  "/comments/users/count",
+  verifyToken,
+  commentController.getCommentCount
+);
 // Get a comment by ID
 router.get("/comments/:id", commentController.getCommentById);
 

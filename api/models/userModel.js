@@ -3,7 +3,7 @@ const db = require("../database/db-client");
 const userModel = {
   getAllUsers: async () => {
     const [users] = await db.query(
-      "select id, firstname, lastname, email, pseudo, avatar, status from user"
+      "select id, firstname, lastname, email, pseudo, avatar, status, role from user"
     );
     return users;
   },
@@ -14,7 +14,7 @@ const userModel = {
   },
   getUserById: async (id) => {
     const [user] = await db.query(
-      "select id, firstname, lastname, email, pseudo, avatar, status from user where id=? ",
+      "select id, firstname, lastname, email, pseudo, avatar, status, role from user where id=? ",
       [id]
     );
     return user;

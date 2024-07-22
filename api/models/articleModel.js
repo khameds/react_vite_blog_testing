@@ -78,6 +78,13 @@ GROUP BY user_id, u.firstname, u.lastname
     const [result] = await db.query("DELETE FROM article WHERE id = ?", [id]);
     return result;
   },
+  getArticleCount: async (userId) => {
+    const [result] = await db.query(
+      "SELECT COUNT(*) as article FROM comment WHERE user_id = ?",
+      [userId]
+    );
+    return result;
+  },
 };
 
 module.exports = articleModel;
