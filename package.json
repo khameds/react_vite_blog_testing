@@ -9,7 +9,8 @@
     "db:seed": "cd ./api && node seed.js",
     "dev": "concurrently -n front,back -c green,yellow -t \"HH:mm:ss\" -p \"{name} {time}\" \"npm --prefix ./client run dev\" \"npm --prefix ./api run dev\"",
     "dev-front": "npm --prefix ./client run dev",
-    "dev-back": "npm --prefix ./api run dev"
+    "dev-back": "npm --prefix ./api run dev",
+    "cy:open" : "cypress open"
   },
   "keywords": [],
   "author": "",

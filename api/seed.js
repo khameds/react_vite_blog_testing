@@ -30,7 +30,9 @@ const seed = async () => {
     // Switch to the newly created database
     await database.query(`use ${DB_NAME}`);
 
+    /////////////////////////////////////////////////////////////////
     // Execute the SQL statements to create a regular user
+    /////////////////////////////////////////////////////////////////
     await database.query(
       "INSERT INTO user (firstname, lastname, email, hashedPassword, pseudo, avatar ) values (?,?,?,?,?,?)",
       [
@@ -42,10 +44,6 @@ const seed = async () => {
         "",
       ]
     );
-
-    /////////////////////////////////////////////////////////////////
-    // Execute the SQL statements to create a regular user
-    /////////////////////////////////////////////////////////////////
     let result = await database.query("SELECT id FROM user WHERE email = (?)", [
       "user@mail.com",
     ]);
@@ -89,12 +87,13 @@ const seed = async () => {
     /////////////////////////////////////////////////////////////////
     // Execute the SQL statements to create an article
     /////////////////////////////////////////////////////////////////
-    await database.query("INSERT INTO article (title, description, category_id, user_id) VALUES (?, ?, ?, ?)",
+    await database.query(
+      "INSERT INTO article (title, description, category_id, user_id) VALUES (?, ?, ?, ?)",
       ["articleTitle", "articleDescription", categoryId, userId]
     );
     result = await database.query("SELECT * FROM article");
     const articleId = result[0][0].id;
-    console.log("%capiseed.js:77 article", "color: #007acc;", articleId);
+    console.log("%capiseed.js:77 articleId", "color: #007acc;", articleId);
 
     console.info(`${DB_NAME} updated`);
 
