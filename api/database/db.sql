@@ -6,6 +6,7 @@ DROP TABLE if exists article;
 DROP TABLE if exists category;
 
 SET FOREIGN_KEY_CHECKS = 1;
+
 CREATE TABLE user (
     id INT PRIMARY KEY auto_increment,
     firstname VARCHAR(50) NOT NULL,
@@ -15,6 +16,7 @@ CREATE TABLE user (
     hashedPassword text NOT NULL,
     avatar VARCHAR(255),
     status BOOLEAN DEFAULT false,
+    role ENUM("user", "admin") DEFAULT "user",
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
