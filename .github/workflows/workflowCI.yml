@@ -37,6 +37,7 @@ jobs:
         mysql-database: ${{ secrets.DB_NAME }}
         mysql-user: ${{ secrets.DB_USER }}
         mysql-password: ${{ secrets.DB_PASSWORD }}
+        mysql-root-password: ${{ secrets.DB_ROOT_PASSWORD }}
           
     - run: npm run setup --if-present
     - run: npm run db:migrate --if-present
