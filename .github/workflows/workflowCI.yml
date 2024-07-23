@@ -22,15 +22,15 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
 
-    - name: Set up MySQL
-      uses: martinbaillie/mysql-setup-action@v1
-      with:
-        mysql-version: '8.0'
-        mysql-root-password: ${{ secrets.DB_PASSWORD }}
-        mysql-database: ${{ secrets.DB_NAME }}
-        mysql-user: ${{ secrets.DB_USER }}
-        mysql-password: ${{ secrets.DB_PASSWORD }}
+    - name: Install MySQL
+      run: sudo apt-get update && sudo apt-get install -y mysql-server
 
-    - name: Run MySQL commands
+    - name: Start MySQL service
+      run: sudo service mysql start
+
+    - name: Set up MySQL database
       run: |
-        mysql -h ${{ secrets.DB_HOST }} -P ${{ secrets.DB_PORT }} -u ${{ secrets.DB_USER }} -p${{ secrets.DB_PASSWORD }} -e "CREATE DATABASE IF NOT EXISTS ${{ secrets.DB_NAME }};"
+        mysql -e "CREATE DATABASE IF NOT EXISTS ${{ secrets.DB_NAME }};"
+        mysql -e "CREATE USER IF NOT EXISTS '${{ secrets.DB_USER }}'@'%' IDENTIFIED BY '${{ secrets.DB_PASSWORD }}';"
+        mysql -e "GRANT ALL PRIVILEGES ON ${{ secrets.DB_NAME }}.* TO '${{ secrets.DB_USER }}'@'%';"
+        mysql -e "FLUSH PRIVILEGES;"
