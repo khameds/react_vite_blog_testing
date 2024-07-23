@@ -11,8 +11,8 @@
     "dev-front": "npm --prefix ./client run dev",
     "dev-back": "npm --prefix ./api run dev",
     "cy:open": "cypress open",
-    "pm:newman": "newman run newman/cat_blog_postman_collection.json",
-    "pm:report": "newman run newman/cat_blog_postman_collection.json --reporters=cli,htmlextra"
+    "pm:newman": "newman run newman/cat_blog_postman_collection_23_07.json",
+    "pm:report": "newman run newman/cat_blog_postman_collection_23_07.json --reporters=cli,htmlextra"
   },
   "keywords": [],
   "author": "",

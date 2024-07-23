@@ -1,0 +1,2296 @@
+{
+	"info": {
+		"_postman_id": "e8883d9c-cc6a-4fe0-bd3b-2d109626387a",
+		"name": "Cat blog",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "36210206",
+		"_collection_link": "https://team-jesaispas.postman.co/workspace/The-cat-lovers~3ce166d4-212e-434d-8431-c7b71e55a22b/collection/36210206-e8883d9c-cc6a-4fe0-bd3b-2d109626387a?action=share&source=collection_link&creator=36210206"
+	},
+	"item": [
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "S50-Etat du serveur",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Response time is less than 200ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SC 54 create user",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const email=\"testmail\"+ Math.floor(Math.random()*99999999999999)+\"@test.com\";\r",
+									"\r",
+									"pm.collectionVariables.set(\"email\", email);\r",
+									"console.log(email);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"JSON schema and data type are OK\", function () {\r",
+									"     pm.expect(pm.response.json()).to.be.an('object');\r",
+									"     pm.expect(pm.response.json().success).to.be.a('boolean');\r",
+									"     pm.expect(pm.response.json().status).to.be.a('number');\r",
+									"     pm.expect(pm.response.json().message).to.be.a('string');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"Félicitaion ! votre compte à été bien créer\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"firstname\": \"testFirstnamePM\",\r\n  \"lastname\":\"testLastnamePM\",\r\n  \"email\": \"{{email}}\",\r\n  \"password\": \"Azerty123!\",\r\n  \"pseudo\": \"TesterPM\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/register",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SC 55 login user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if(pm.response.code === 200)\r",
+									"    pm.collectionVariables.set(\"token\", pm.response.json().token);\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"JSON schema is OK\", function () {\r",
+									"     pm.expect(pm.response.json()).to.be.an('object');\r",
+									"     pm.expect(pm.response.json()).to.have.property('token');\r",
+									"     \r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"{{email}}\",\r\n  \"password\": \"Azerty123!\"\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SC 54 create admin user as regular user",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const email=\"testmail\"+ Math.floor(Math.random()*99999999999999)+\"@test.com\";\r",
+									"\r",
+									"pm.collectionVariables.set(\"email\", email);\r",
+									"console.log(email);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 401\", function () {\r",
+									"    pm.response.to.have.status(401);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"JSON schema is OK\", function () {\r",
+									"     pm.expect(pm.response.json()).to.be.an('object');\r",
+									"     pm.expect(pm.response.json()).to.have.property('success');\r",
+									"     pm.expect(pm.response.json()).to.have.property('status');\r",
+									"     pm.expect(pm.response.json()).to.have.property('message');\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"firstname\": \"testFirstnamePM\",\r\n  \"lastname\":\"testLastnamePM\",\r\n  \"email\": \"{{email}}\",\r\n  \"password\": \"Azerty123!\",\r\n  \"pseudo\": \"TesterPM\",\r\n  \"role\" : \"admin\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/signup",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SC 55 login as admin user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if(pm.response.code === 200){\r",
+									"    pm.collectionVariables.set(\"token\", pm.response.json().token);\r",
+									"    pm.collectionVariables.set(\"email\", pm.collectionVariables.get(\"admin_mail\"));\r",
+									"    pm.collectionVariables.set(\"user_id\", pm.collectionVariables.get(\"admin_id\"));\r",
+									"}\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"JSON schema is OK\", function () {\r",
+									"     pm.expect(pm.response.json()).to.be.an('object');\r",
+									"     pm.expect(pm.response.json()).to.have.property('token');\r",
+									"     \r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"{{admin_mail}}\",\r\n  \"password\": \"{{admin_password}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SC 54 create admin user as an admin user",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const email=\"testmail\"+ Math.floor(Math.random()*99999999999999)+\"@test.com\";\r",
+									"pm.collectionVariables.set(\"email\", email);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"JSON schema and data type are OK\", function () {\r",
+									"     pm.expect(pm.response.json()).to.be.an('object');\r",
+									"     pm.expect(pm.response.json().success).to.be.a('boolean');\r",
+									"     pm.expect(pm.response.json().status).to.be.a('number');\r",
+									"     pm.expect(pm.response.json().message).to.be.a('string');\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"firstname\": \"admin2Firstname\",\r\n  \"lastname\":\"  admin2Lastname\",\r\n  \"email\": \"{{email}}\",\r\n  \"password\": \"Azerty123!\",\r\n  \"pseudo\": \"admin2\",\r\n  \"role\" : \"admin\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/signup",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SC 55 login as new admin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if(pm.response.code === 200)\r",
+									"    pm.collectionVariables.set(\"token\", pm.response.json().token);\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"JSON schema is OK\", function () {\r",
+									"     pm.expect(pm.response.json()).to.be.an('object');\r",
+									"     pm.expect(pm.response.json()).to.have.property('token');\r",
+									"     \r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"{{email}}\",\r\n  \"password\": \"{{password}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SC 71 list user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"JSON data type are OK\", function () {\r",
+									"     pm.expect(pm.response.json()).to.be.an('object');\r",
+									"     pm.expect(pm.response.json().success).to.be.a('boolean');\r",
+									"     pm.expect(pm.response.json().status).to.be.a('number');\r",
+									"     pm.expect(pm.response.json().message).to.be.a('string');\r",
+									"     pm.expect(pm.response.json().users).to.be.an('array');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"JSON schema is OK\", function () {\r",
+									"     \r",
+									"     pm.response.json().users.forEach((item) => {\r",
+									"            pm.expect(item).to.have.property('id');\r",
+									"            pm.expect(item).to.have.property('firstname');\r",
+									"            pm.expect(item).to.have.property('lastname');\r",
+									"            pm.expect(item).to.have.property('email');\r",
+									"            pm.expect(item).to.have.property('pseudo');\r",
+									"            pm.expect(item).to.have.property('avatar');\r",
+									"            pm.expect(item).to.have.property('status');\r",
+									"            \r",
+									"               \r",
+									"            \r",
+									"     });\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/users",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SC 74 user by id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"user trouvé !\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/users/profile",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Category",
+			"item": [
+				{
+					"name": "SC 60 create category",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';\r",
+									"  let result = '';\r",
+									"  const charactersLength = characters.length;\r",
+									"  \r",
+									"  for (let i = 0; i < 15; i++) {\r",
+									"    result += characters.charAt(Math.floor(Math.random() * charactersLength));\r",
+									"  }\r",
+									"\r",
+									"pm.collectionVariables.set(\"cat_name\", result);\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"    pm.collectionVariables.set(\"category_test_id\", pm.response.json().data.insertId)\r",
+									"    \r",
+									"});\r",
+									"\r",
+									"pm.test(\"JSON schema is OK\", function () {\r",
+									"    pm.expect(pm.response.json()).to.be.an('object');\r",
+									"    pm.expect(pm.response.json()).to.have.property('success',true);\r",
+									"    pm.expect(pm.response.json()).to.have.property('status');\r",
+									"    pm.expect(pm.response.json()).to.have.property('data');\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"{{cat_name}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/categories",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SC 61 get all categories",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"JSON schema is OK\", function () {\r",
+									"    pm.expect(pm.response.json()).to.be.an('object');\r",
+									"    pm.expect(pm.response.json()).to.have.property('success',true);\r",
+									"    pm.expect(pm.response.json()).to.have.property('status');\r",
+									"    pm.expect(pm.response.json()).to.have.property('data').and.to.be.an('array');\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/categories",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SC 62 category by id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"JSON schema is OK\", function () {\r",
+									"     pm.expect(pm.response.json()).to.be.an('object');\r",
+									"     pm.expect(pm.response.json()).to.have.property('success', true);\r",
+									"     pm.expect(pm.response.json()).to.have.property('status');\r",
+									"     pm.expect(pm.response.json().data).to.be.an('object');\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/categories/{{category_test_id}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"categories",
+								"{{category_test_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SC 63 update category by ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"JSON schema is OK\", function () {\r",
+									"    pm.expect(pm.response.json()).to.be.an('object');\r",
+									"    pm.expect(pm.response.json()).to.have.property('success',true);\r",
+									"    pm.expect(pm.response.json()).to.have.property('status');\r",
+									"    pm.expect(pm.response.json()).to.have.property('message');\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';\r",
+									"  let result = '';\r",
+									"  const charactersLength = characters.length;\r",
+									"  \r",
+									"  for (let i = 0; i < 15; i++) {\r",
+									"    result += characters.charAt(Math.floor(Math.random() * charactersLength));\r",
+									"  }\r",
+									"\r",
+									"pm.collectionVariables.set(\"cat_name\", result);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"name\": \"{{cat_name}}\",\r\n\"category_id\": \"{{category_test_id}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/categories/{{category_test_id}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"categories",
+								"{{category_test_id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Article",
+			"item": [
+				{
+					"name": "S53 create article",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const resp =pm.response.json();\r",
+									"\r",
+									"pm.test(\"Response time is less than 200ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+									"});\r",
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"    pm.collectionVariables.set(\"article_test_id\", pm.response.json().data.insertId);\r",
+									"});\r",
+									"pm.test(\"Response status is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response contains success true\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.success).to.eql(true);\r",
+									"    pm.expect(jsonData.status).to.eql(201);\r",
+									"    pm.expect(jsonData.data).to.be.an(\"object\");\r",
+									"});\r",
+									"\r",
+									"\r",
+									"\r",
+									"   \r",
+									"   \r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\" : \"Mon Premier Article 1\" , \r\n    \"description\": \"Ceci est le contenu de mon premier article.\", \r\n    \"category_id\" : \"{{category_test_id}}\"\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/articles",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"articles"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SC 78 get all articles",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/articles",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"articles"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SC 79 get article by-user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/articles/user",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"articles",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SC 80 get article by-id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"Article Publié\",\r\n    \"description\": \"Contenu de l'article publié.\",\r\n    \"category_id\": \"{{category_test_id}}\",\r\n    \"user_id\" : {{user_id}}\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/articles/{{article_test_id}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"articles",
+								"{{article_test_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "S51 update article by id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"Article Publié test 1\",\r\n    \"description\": \"Contenu de l'article publié. 1\",\r\n    \"category_id\": \"{{category_test_id}}\"\r\n   \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/articles/{{article_test_id}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"articles",
+								"{{article_test_id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Comment",
+			"item": [
+				{
+					"name": "SC 65 create comment as registred user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"    pm.collectionVariables.set(\"comment_test_id\", pm.response.json().data.insertId);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"JSON schema is OK\", function () {\r",
+									"    pm.expect(pm.response.json()).to.be.an('object');\r",
+									"    pm.expect(pm.response.json()).to.have.property('success');\r",
+									"    pm.expect(pm.response.json()).to.have.property('status');\r",
+									"    pm.expect(pm.response.json()).to.have.property('data');\r",
+									"    pm.expect(pm.response.json().data).to.be.an('object');\r",
+									"    pm.expect(pm.response.json().data).to.have.property('fieldCount');\r",
+									"    pm.expect(pm.response.json().data).to.have.property('affectedRows');\r",
+									"    pm.expect(pm.response.json().data).to.have.property('insertId');\r",
+									"    pm.expect(pm.response.json().data).to.have.property('info');\r",
+									"    pm.expect(pm.response.json().data).to.have.property('serverStatus');\r",
+									"    pm.expect(pm.response.json().data).to.have.property('warningStatus');\r",
+									"    pm.expect(pm.response.json().data).to.have.property('changedRows');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Data type are OK\", function () {\r",
+									"     pm.expect(pm.response.json()).to.be.an('object');\r",
+									"     pm.expect(pm.response.json().success).to.be.a('boolean');\r",
+									"     pm.expect(pm.response.json().status).to.be.a('number');\r",
+									"     pm.expect(pm.response.json().data).to.be.an('object');\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"description\": \"Test comment\",\r\n  \"article_id\": {{article_test_id}}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/comments",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"comments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SC 65 create comment as unregistred user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 401\", function () {\r",
+									"    pm.response.to.have.status(401);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"response values are OK\", function () {\r",
+									"     pm.expect(pm.response.json()).to.have.property('success', false);\r",
+									"     pm.expect(pm.response.json()).to.have.property('status', 401);\r",
+									"     pm.expect(pm.response.json()).to.have.property('message', \"Vous n'êtes pas authorisé à realiser cette action, Connectz-vous ! \");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"description\": \"Test comment\",\r\n  \"article_id\": {{article_test_id}}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/comments",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"comments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SC 75 get comments",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"JSON schema is OK\", function () {\r",
+									"     pm.expect(pm.response.json()).to.be.an('object');\r",
+									"     pm.expect(pm.response.json()).to.have.property('success');\r",
+									"     pm.expect(pm.response.json()).to.have.property('status');\r",
+									"     pm.expect(pm.response.json()).to.have.property('data').that.is.an('array').and.to.have.lengthOf.at.least(1, \"Data should not be empty\");\r",
+									"     pm.response.json().data.forEach((item) => {\r",
+									"            pm.expect(item).to.have.property('article_id');\r",
+									"            pm.expect(item).to.have.property('article_title');\r",
+									"            pm.expect(item).to.have.property('article_description');\r",
+									"            pm.expect(item).to.have.property('userId');\r",
+									"            pm.expect(item).to.have.property('comments').that.is.an('array');\r",
+									"            item.comments.forEach((comment) => {\r",
+									"                pm.expect(comment).to.have.property('user_id');\r",
+									"                pm.expect(comment).to.have.property('user_info');\r",
+									"                pm.expect(comment).to.have.property('comment_id');\r",
+									"                pm.expect(comment).to.have.property('user_email');\r",
+									"                pm.expect(comment).to.have.property('user_avatar');\r",
+									"                pm.expect(comment).to.have.property('user_pseudo');\r",
+									"                pm.expect(comment).to.have.property('user_status');\r",
+									"                pm.expect(comment).to.have.property('comment_created_at');\r",
+									"                pm.expect(comment).to.have.property('comment_updated_at');\r",
+									"                pm.expect(comment).to.have.property('comment_description');\r",
+									"            });\r",
+									"     });\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/comments",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"comments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SC 77 get comment count by user id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"JSON schema is OK\", function () {\r",
+									"     pm.expect(pm.response.json()).to.be.an('object');\r",
+									"     pm.expect(pm.response.json()).to.have.property('success');\r",
+									"     pm.expect(pm.response.json()).to.have.property('status');\r",
+									"     pm.expect(pm.response.json()).to.have.property('data');\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/comments/users/count",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"comments",
+								"users",
+								"count"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SC 66 get comment by id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"JSON schema is OK\", function () {\r",
+									"     pm.expect(pm.response.json()).to.be.an('object');\r",
+									"     pm.expect(pm.response.json()).to.have.property('success', true);\r",
+									"     pm.expect(pm.response.json()).to.have.property('status');\r",
+									"     pm.expect(pm.response.json().data).to.be.an('array');\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/comments?id={{comment_test_id}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"comments"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "{{comment_test_id}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SC 67 update comment by id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"JSON schema is OK\", function () {\r",
+									"     pm.expect(pm.response.json()).to.be.an('object');\r",
+									"     pm.expect(pm.response.json()).to.have.property('success', true);\r",
+									"     pm.expect(pm.response.json()).to.have.property('status');\r",
+									"     pm.expect(pm.response.json().message).to.be.a('string');\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"description\": \"Updated test comment\",\r\n    \"article_id\": {{article_test_id}}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/comments/{{comment_test_id}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"comments",
+								"{{comment_test_id}}"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "{{comment_test_id}}",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SC 55 login unregistred user Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 401\", function () {\r",
+									"    pm.response.to.have.status(401);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"JSON schema is OK\", function () {\r",
+									"     pm.expect(pm.response.json()).to.be.an('object');\r",
+									"     pm.expect(pm.response.json()).to.have.property('success');\r",
+									"     pm.expect(pm.response.json()).to.have.property('status');\r",
+									"     pm.expect(pm.response.json()).to.have.property('message');\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"testmail68949489478877@test.com\",\r\n  \"password\": \"unknownPWD123!\"\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "end test",
+			"item": [
+				{
+					"name": "SC 68 delete comment by id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/comments/{{comment_test_id}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"comments",
+								"{{comment_test_id}}"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "{{comment_test_id}}",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "S52 delete article",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"JSON schema is OK\", function () {\r",
+									"    pm.expect(pm.response.json()).to.be.an('object');\r",
+									"    pm.expect(pm.response.json()).to.have.property('success', true);\r",
+									"    pm.expect(pm.response.json()).to.have.property('status');\r",
+									"    pm.expect(pm.response.json()).to.have.property('message');\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/articles/{{article_test_id}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"articles",
+								"{{article_test_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SC 64 delete a category by ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"JSON schema is OK\", function () {\r",
+									"    pm.expect(pm.response.json()).to.be.an('object');\r",
+									"    pm.expect(pm.response.json()).to.have.property('success',true);\r",
+									"    pm.expect(pm.response.json()).to.have.property('status');\r",
+									"    pm.expect(pm.response.json()).to.have.property('message');\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/categories/{{category_test_id}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"categories",
+								"{{category_test_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SC 54 create user",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const email=\"testmail\"+ Math.floor(Math.random()*99999999999999)+\"@test.com\";\r",
+									"\r",
+									"pm.collectionVariables.set(\"email\", email);\r",
+									"console.log(email);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"JSON schema and data type are OK\", function () {\r",
+									"     pm.expect(pm.response.json()).to.be.an('object');\r",
+									"     pm.expect(pm.response.json().success).to.be.a('boolean');\r",
+									"     pm.expect(pm.response.json().status).to.be.a('number');\r",
+									"     pm.expect(pm.response.json().message).to.be.a('string');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"Félicitaion ! votre compte à été bien créer\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"firstname\": \"testFirstnamePM\",\r\n  \"lastname\":\"testLastnamePM\",\r\n  \"email\": \"{{email}}\",\r\n  \"password\": \"Azerty123!\",\r\n  \"pseudo\": \"TesterPM\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/register",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SC 55 login user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if(pm.response.code === 200)\r",
+									"    pm.collectionVariables.set(\"token\", pm.response.json().token);\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"JSON schema is OK\", function () {\r",
+									"     pm.expect(pm.response.json()).to.be.an('object');\r",
+									"     pm.expect(pm.response.json()).to.have.property('token');\r",
+									"     \r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"{{email}}\",\r\n  \"password\": \"Azerty123!\"\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SC 57 update password",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"JSON schema and data type are OK\", function () {\r",
+									"     pm.expect(pm.response.json()).to.be.an('object');\r",
+									"     pm.expect(pm.response.json().success).to.be.a('boolean');\r",
+									"     pm.expect(pm.response.json().status).to.be.a('number');\r",
+									"     pm.expect(pm.response.json().message).to.be.a('string');\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"oldPassword\":\"Azerty123!\",\r\n\"newPassword\":\"updateAzerty123!\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/reset-password",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"reset-password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SC 56 update user data",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"JSON schema and data type are OK\", function () {\r",
+									"     pm.expect(pm.response.json()).to.be.an('object');\r",
+									"     pm.expect(pm.response.json().success).to.be.a('boolean');\r",
+									"     pm.expect(pm.response.json().status).to.be.a('number');\r",
+									"     pm.expect(pm.response.json().message).to.be.a('string');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"Vos données sont mises à jour !\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"firstname\": \"testFirstnamePMupdate\",\r\n  \"lastname\":\"testLastnamePMupdate\",\r\n  \"pseudo\": \"TesterPMupdate\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SC 76 disable user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"JSON schema and data type are OK\", function () {\r",
+									"     pm.expect(pm.response.json()).to.be.an('object');\r",
+									"     pm.expect(pm.response.json().success).to.be.a('boolean');\r",
+									"     pm.expect(pm.response.json().status).to.be.a('number');\r",
+									"     pm.expect(pm.response.json().message).to.be.a('string');\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/users/disabled-user",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"disabled-user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SC 69 log out",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"JSON schema is OK\", function () {\r",
+									"     pm.expect(pm.response.json()).to.be.an('object');\r",
+									"     pm.expect(pm.response.json()).to.have.property('success');\r",
+									"     pm.expect(pm.response.json()).to.have.property('status');\r",
+									"     pm.expect(pm.response.json()).to.have.property('message');\r",
+									"     pm.expect(pm.response.json()).to.have.property('token');\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/users/logout",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:5555/api",
+			"type": "string"
+		},
+		{
+			"key": "token",
+			"value": ""
+		},
+		{
+			"key": "email",
+			"value": ""
+		},
+		{
+			"key": "password",
+			"value": "Azerty123!",
+			"type": "string"
+		},
+		{
+			"key": "comment_test_id",
+			"value": "1",
+			"type": "string"
+		},
+		{
+			"key": "category_test_id",
+			"value": "1",
+			"type": "string"
+		},
+		{
+			"key": "user_id",
+			"value": "1",
+			"type": "string"
+		},
+		{
+			"key": "admin_id",
+			"value": "1",
+			"type": "string"
+		},
+		{
+			"key": "article_test_id",
+			"value": "1",
+			"type": "string"
+		},
+		{
+			"key": "title_Article",
+			"value": ""
+		},
+		{
+			"key": "last_article_title",
+			"value": ""
+		},
+		{
+			"key": "last_article_id_created",
+			"value": ""
+		},
+		{
+			"key": "last_comment_created",
+			"value": ""
+		},
+		{
+			"key": "registred_email",
+			"value": "user@mail.com",
+			"type": "string"
+		},
+		{
+			"key": "insertId",
+			"value": ""
+		},
+		{
+			"key": "comment_name",
+			"value": ""
+		},
+		{
+			"key": "cat_name",
+			"value": ""
+		},
+		{
+			"key": "admin_mail",
+			"value": "admin@mail.com",
+			"type": "string"
+		},
+		{
+			"key": "admin_password",
+			"value": "Azerty123!",
+			"type": "string"
+		}
+	]
+}
