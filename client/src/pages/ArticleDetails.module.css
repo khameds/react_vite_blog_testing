@@ -1,0 +1,122 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+body{
+  background-color: #FDF7F5;
+}
+/*article part*/
+.articleContainer {
+  height: 80vh;
+  display: flex;
+  justify-content: center;
+}
+
+.articleDetails {
+  width: 50%;
+  margin-top: 20px;
+  padding: 20px;
+  text-align: start;
+}
+
+.titleBlock {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  border-bottom: 5px solid #cccccc;
+  margin-bottom: 50px;
+  padding-bottom: 5px;
+}
+
+.description {
+  margin-bottom: 20px;
+}
+/* comments part*/
+.commentUnique {
+  padding: 20px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.writer {
+  font-size: 12px;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 30%;
+}
+.avatar {
+  width: 3rem;
+}
+
+.comments {
+  margin-top: 100px;
+}
+.commentContainer {
+  background-color: transparent;
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  margin-bottom: 50px;
+}
+
+.titleAndButtonComments {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* buttons part*/
+.buttonContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  padding-bottom: 20px;
+  width: 100%;
+}
+
+.button {
+  background-color: #0d3d38;
+  color: aliceblue;
+  border: none;
+  padding: 10px 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  width: 10rem;
+}
+
+.buttonDelete {
+  background-color: #ce2c31;
+  color: aliceblue;
+  border: none;
+  padding: 10px 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  width: 8rem;
+}
+.button:hover {
+  background-color: #008573;
+}
+.buttonDelete:hover {
+  background-color: #e5484d;
+}
+
+@media screen and (max-width: 800px) {
+  .titleAndButtonComments {
+    flex-direction: column;
+  }
+ .articleDetails{
+  width: 70%;
+ }
+  
+}
+
+@media screen and (max-width: 430px) {
+
+ .articleDetails{
+  width: 100%;
+ }
+  
+}

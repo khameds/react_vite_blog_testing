@@ -1,0 +1,78 @@
+body{
+  background-color: #FDF7F5;
+}
+.cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  height: 100%;
+  align-items: center;
+  padding: 2rem;
+}
+
+.container {
+  height: 80vh;
+  padding: 2rem;
+}
+
+.categories {
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: space-around;
+  margin-bottom: 80px;
+}
+
+.categories button {
+  cursor: pointer;
+}
+
+.tag {
+  padding-right: 10px;
+  padding-left: 10px;
+}
+.categoryTag {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 20px;
+  margin-right: 10px;
+  font-size: 14px;
+  cursor: pointer;
+  color: aliceblue;
+  background-color:#008573;
+
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  align-items: center;
+}
+
+.button {
+  background-color:#0d3d38;
+  color: aliceblue;
+  border: none;
+  padding: 4px 10px;
+  font-size: 14px;
+  border-radius: 20px;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.addArticle {
+  background-color: #0d3d38;
+  color: aliceblue;
+  border: none;
+  padding: 10px 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  width: 10rem;
+  font-size: 16px;
+}
+
+.addArticle:hover {
+  background-color: #008573;
+}
+
+@media screen and (max-width: 430px) {
+  .cards {
+    justify-content: center;
+  }
+  
+}

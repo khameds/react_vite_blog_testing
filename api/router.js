@@ -59,9 +59,8 @@ router.patch("/users", verifyToken, userController.updateUser);
 
 // disabled account user
 router.patch(
-  "/user/disabled-user",
+  "/users/disabled-user",
   verifyToken,
-  validationPassword,
   userController.disableUserAccount
 );
 // login user

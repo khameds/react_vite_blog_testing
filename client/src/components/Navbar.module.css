@@ -1,0 +1,53 @@
+.logo {
+  width: 6rem;
+}
+
+.navbar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  height: 3rem;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px,
+    rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+}
+
+ul {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  width: 50%;
+  list-style-type: none;
+}
+
+ul li {
+  cursor: pointer;
+}
+
+ul li a {
+  text-decoration: none;
+  color: black;
+}
+ul li:hover {
+  font-weight: bold;
+}
+.avatar {
+  width: 3rem;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.rightContainer {
+  width: 60%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: end;
+}
+
+@media screen and (max-width: 620px) {
+  ul {
+    width: 70%;
+  }
+}

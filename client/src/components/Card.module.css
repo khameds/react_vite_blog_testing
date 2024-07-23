@@ -1,0 +1,44 @@
+.card {
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  padding: 1rem;
+  border-radius: 10px;
+  height: 15rem;
+  width: 20rem;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  transition: transform 0.2s ease;
+  cursor: pointer;
+  position: relative;
+}
+
+.link{
+  text-decoration: none;
+  color: black;
+}
+.card:hover {
+  transform: scale(1.05);
+}
+.tag {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 20px;
+  margin-right: 5px;
+  font-size: 14px;
+  cursor: pointer;
+  color: aliceblue;
+  font-weight: bold;
+  background-color: #008573;
+  width: fit-content;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.titleWithTag {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-between;
+}
