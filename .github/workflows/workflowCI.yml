@@ -11,33 +11,39 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [14.x, 16.x, 18.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
-
+    
     steps:
-    - uses: actions/checkout@v4
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
+    - uses: actions/checkout@v3
+    - uses: actions/setup-node@v4
       with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
+        node-version: 'node'
+
+    - name: Set up environment variables
+      run: |
+          echo "APP_PORT=${{ secrets.APP_PORT }}" >> $GITHUB_ENV
+          echo "APP_HOST=${{ secrets.APP_HOST }}" >> $GITHUB_ENV
+          echo "DB_HOST=${{ secrets.DB_HOST }}" >> $GITHUB_ENV
+          echo "DB_USER=${{ secrets.DB_USER }}" >> $GITHUB_ENV
+          echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> $GITHUB_ENV
+          echo "DB_NAME=${{ secrets.DB_NAME }}" >> $GITHUB_ENV
+          echo "DB_PORT=${{ secrets.DB_PORT }}" >> $GITHUB_ENV
+          echo "SECRET_KEY_JWT=${{ secrets.SECRET_KEY_JWT }}" >> $GITHUB_ENV
+          echo "FRONTEND_URL=${{ secrets.FRONTEND_URL }}" >> $GITHUB_ENV
+          echo "FRONTEND_URL_BACKOFFICE=${{ secrets.FRONTEND_URL_BACKOFFICE }}" >> $GITHUB_ENV
+          
     - name: Setup MySQL
     # You may pin to the exact commit or the version.
     # uses: mirromutth/mysql-action@de1fba8b3f90ce8db80f663a7043be3cf3231248
       uses: mirromutth/mysql-action@v1.1
       with:
         # Using latest MySQL Version
-        host port: 3306
-        container port: 3306  
-        mysql database: db_project
+        host port: ${{ secrets.DB_PORT }}"
+        container port: ${{ secrets.DB_PORT }}"  
+        mysql database: ${{ secrets.DB_NAME }}"
         # MYSQL_USER - create the specified user with superuser power for created database
-        mysql user: smail
-        mysql password: d8r8y #TODO out it in repo secrets
+        mysql user: ${{ secrets.DB_USER }}"
+        mysql password: ${{ secrets.DB_PASSWORD }}"
           
     - run: npm run setup --if-present
     - run: npm run db:migrate --if-present
