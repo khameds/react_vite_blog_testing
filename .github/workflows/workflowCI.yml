@@ -17,6 +17,7 @@ jobs:
       SECRET_KEY_JWT: ${{ secrets.SECRET_KEY_JWT }}
       FRONTEND_URL: ${{ secrets.FRONTEND_URL }}
       FRONTEND_URL_BACKOFFICE: ${{ secrets.FRONTEND_URL_BACKOFFICE }}
+      MYSQL_PWD: ${{ secrets.DB_ROOT_PASSWORD }}
 
     steps:
     - name: Checkout repository
@@ -30,7 +31,7 @@ jobs:
 
     - name: Set up MySQL database
       run: |
-        mysql -u root -p root;
+        mysql -u root
         mysql -e "CREATE DATABASE IF NOT EXISTS ${{ secrets.DB_NAME }};"
         mysql -e "CREATE USER IF NOT EXISTS '${{ secrets.DB_USER }}'@'%' IDENTIFIED BY '${{ secrets.DB_PASSWORD }}';"
         mysql -e "GRANT ALL PRIVILEGES ON ${{ secrets.DB_NAME }}.* TO '${{ secrets.DB_USER }}'@'%';"
