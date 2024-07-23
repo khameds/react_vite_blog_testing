@@ -54,8 +54,7 @@ jobs:
 
     - name: Run database migrations
       run: |
-        mysql --socket=/var/run/mysqld/mysqld.sock -u root -p${{ secrets.DB_ROOT_PASSWORD }} -e "CREATE DATABASE IF NOT EXISTS ${{ secrets.DB_NAME }};"
-        # Add more SQL commands here to set up your database schema
+        mysql -u root -p${{ secrets.DB_ROOT_PASSWORD }} -e "CREATE DATABASE IF NOT EXISTS ${{ secrets.DB_NAME }};"
 
     - name: Check MySQL logs
       run: |
