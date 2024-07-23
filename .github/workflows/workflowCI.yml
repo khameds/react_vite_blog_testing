@@ -33,17 +33,13 @@ jobs:
           echo "FRONTEND_URL_BACKOFFICE=${{ secrets.FRONTEND_URL_BACKOFFICE }}" >> $GITHUB_ENV
           
     - name: Setup MySQL
-    # You may pin to the exact commit or the version.
-    # uses: mirromutth/mysql-action@de1fba8b3f90ce8db80f663a7043be3cf3231248
       uses: mirromutth/mysql-action@v1.1
       with:
-        # Using latest MySQL Version
-        host port: ${{ secrets.DB_PORT }}"
-        container port: ${{ secrets.DB_PORT }}"  
-        mysql database: ${{ secrets.DB_NAME }}"
-        # MYSQL_USER - create the specified user with superuser power for created database
-        mysql user: ${{ secrets.DB_USER }}"
-        mysql password: ${{ secrets.DB_PASSWORD }}"
+        host-port: ${{ secrets.DB_PORT }}
+        container-port: ${{ secrets.DB_PORT }}
+        mysql-database: ${{ secrets.DB_NAME }}
+        mysql-user: ${{ secrets.DB_USER }}
+        mysql-password: ${{ secrets.DB_PASSWORD }}
           
     - run: npm run setup --if-present
     - run: npm run db:migrate --if-present
