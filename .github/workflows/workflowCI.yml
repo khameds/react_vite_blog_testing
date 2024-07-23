@@ -8,8 +8,8 @@ on:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
+    
 jobs:
-
   build:
     runs-on: ubuntu-latest
     #Define environnement variables
@@ -24,20 +24,40 @@ jobs:
       SECRET_KEY_JWT: ${{ secrets.SECRET_KEY_JWT }}
       FRONTEND_URL: ${{ secrets.FRONTEND_URL }}
       FRONTEND_URL_BACKOFFICE: ${{ secrets.FRONTEND_URL_BACKOFFICE }}
+
+    services:
+      mysql:
+        image: mysql:5.7
+        env:
+          MYSQL_ROOT_PASSWORD: ${{ secrets.DB_ROOT_PASSWORD }}
+          MYSQL_DATABASE: ${{ secrets.DB_NAME }}
+        ports:
+          - ${{ secrets.DB_PORT }}:${{ secrets.DB_PORT }}
+        options: >-
+          --health-cmd="mysqladmin ping --silent"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
+
     steps:
     - uses: actions/checkout@v3
     - uses: actions/setup-node@v4
       with:
         node-version: 'node'      
-    - name: Setup MySQL
-      uses: mirromutth/mysql-action@v1.1
-      with:
-        host-port: ${{ secrets.DB_PORT }}
-        container-port: ${{ secrets.DB_PORT }}
-        mysql-database: ${{ secrets.DB_NAME }}
-        mysql-user: root  # Use root user
-        mysql-password: ${{ secrets.DB_ROOT_PASSWORD }}  # Use root password
-        mysql-root-password: ${{ secrets.DB_ROOT_PASSWORD }}
+    
+    - name: Wait for MySQL to be ready
+      run: |
+        until mysqladmin ping -h "127.0.0.1" --silent; do
+          echo 'waiting for mysql...'
+          sleep 5
+        done
+
+    - name: Run database migrations
+      run: |
+        mysql -h ${{ secrets.DB_HOST }} -u root -p ${{ secrets.DB_ROOT_PASSWORD }} -e "CREATE DATABASE IF NOT EXISTS ${{ secrets.DB_NAME }};"
+        "use ${{ secrets.DB_NAME }}";
+        # Add more SQL commands here to set up your database schema  
+
           
     - run: npm run setup --if-present
     - run: npm run db:migrate --if-present
