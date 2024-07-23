@@ -12,6 +12,7 @@ jobs:
 
   build:
     runs-on: ubuntu-latest
+    #Define environnement variables
     env:
       APP_PORT: ${{ secrets.APP_PORT }}
       APP_HOST: ${{ secrets.APP_HOST }}
