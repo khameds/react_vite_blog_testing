@@ -12,7 +12,8 @@
     "dev-back": "npm --prefix ./api run dev",
     "cy:open": "cypress open",
     "pm:newman": "newman run newman/cat_blog_postman_collection_23_07.json",
-    "pm:report": "newman run newman/cat_blog_postman_collection_23_07.json --reporters=cli,htmlextra"
+    "pm:report": "newman run newman/cat_blog_postman_collection_23_07.json --reporters=cli,htmlextra",
+    "test" : "TODO"
   },
   "keywords": [],
   "author": "",
