@@ -59,7 +59,7 @@ jobs:
     - name: Check MySQL logs
       run: |
         docker logs $(docker ps -q --filter ancestor=mysql:5.7)
-          
+       # Project stuff   
     - run: npm run setup --if-present
     - run: npm run db:migrate --if-present
     - run: npm run db:seed --if-present
