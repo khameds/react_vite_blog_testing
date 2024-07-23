@@ -10,7 +10,9 @@
     "dev": "concurrently -n front,back -c green,yellow -t \"HH:mm:ss\" -p \"{name} {time}\" \"npm --prefix ./client run dev\" \"npm --prefix ./api run dev\"",
     "dev-front": "npm --prefix ./client run dev",
     "dev-back": "npm --prefix ./api run dev",
-    "cy:open" : "cypress open"
+    "cy:open": "cypress open",
+    "pm:newman": "newman run newman/cat_blog_postman_collection.json",
+    "pm:report": "newman run newman/cat_blog_postman_collection.json --reporters=cli,htmlextra"
   },
   "keywords": [],
   "author": "",
@@ -19,6 +21,8 @@
     "concurrently": "^8.2.2"
   },
   "devDependencies": {
-    "cypress": "^13.13.1"
+    "cypress": "^13.13.1",
+    "newman": "^6.1.3",
+    "newman-reporter-htmlextra": "^1.23.1"
   }
 }
