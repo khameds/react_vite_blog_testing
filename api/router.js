@@ -8,6 +8,8 @@ const validationEmailAndPassword = require("./services/validation");
 const categoryController = require("./controllers/categoryController");
 const commentController = require("./controllers/commentController");
 const articleController = require("./controllers/articleController");
+const checkRoleUser = require("./services/checkRoleUser");
+const validationPassword = require("./services/validationPassword");
 
 const router = express.Router();
 
@@ -25,27 +27,41 @@ router.get("/users", userController.getAllUsers);
 // get user by id
 router.get("/users/profile", verifyToken, userController.getUserById);
 
-// add user
+// add user without role
 router.post(
   "/users/register",
   validationEmailAndPassword,
   hashPassword,
-  userController.addUser
+  userController.addUserWithoutRole
 );
 
-// update user
-router.patch("/users/:id", userController.updateUser);
+// add user with role admin
+router.post(
+  "/users/signup",
+  verifyToken,
+  checkRoleUser,
+  validationEmailAndPassword,
+  hashPassword,
+  userController.addUserWithRole
+);
+
 // update Password
 router.patch(
-  "/user/reset-password",
+  "/users/reset-password",
+  verifyToken,
+  validationPassword,
   hashNewPassword,
   userController.updatePassword
 );
+
+// update user
+router.patch("/users", verifyToken, userController.updateUser);
 
 // disabled account user
 router.patch(
   "/user/disabled-user",
   verifyToken,
+  validationPassword,
   userController.disableUserAccount
 );
 // login user
@@ -88,7 +104,12 @@ router.delete("/articles/:id", articleController.deleteArticleById);
 ======================================*/
 
 // Create a new category
-router.post("/categories", categoryController.createCategory);
+router.post(
+  "/categories",
+  verifyToken,
+  checkRoleUser,
+  categoryController.createCategory
+);
 
 // Get all categories
 router.get("/categories", categoryController.getAllCategories);
@@ -97,10 +118,19 @@ router.get("/categories", categoryController.getAllCategories);
 router.get("/categories/:id", categoryController.getCategoryById);
 
 // Update a category by ID
-router.put("/categories/:id", categoryController.updateCategoryById);
+router.put(
+  "/categories/:id",
+  verifyToken,
+  categoryController.updateCategoryById
+);
 
 // Delete a category by ID
-router.delete("/categories/:id", categoryController.deleteCategoryById);
+router.delete(
+  "/categories/:id",
+  verifyToken,
+  checkRoleUser,
+  categoryController.deleteCategoryById
+);
 /*=====================================
                 Comment
 ======================================*/

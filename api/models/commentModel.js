@@ -49,7 +49,7 @@ const commentModel = {
   // Fonction pour récupérer un commentaire par son ID
   getCommentById: async (id) => {
     const [rows] = await db.query("SELECT * FROM comment WHERE id = ?", [id]);
-    return rows[0];
+    return rows;
   },
   // Fonction pour mettre à jour un commentaire par son ID
   updateCommentById: async (id, user_id, { description, article_id }) => {

@@ -14,12 +14,12 @@ const userModel = {
   },
   getUserById: async (id) => {
     const [user] = await db.query(
-      "select id, firstname, lastname, email, pseudo, avatar, status, role from user where id=? ",
+      "select id, firstname, lastname, email,hashedPassword, pseudo, avatar, status, role from user where id=? ",
       [id]
     );
     return user;
   },
-  addUser: async ({
+  addUserWithoutRole: async ({
     firstname,
     lastname,
     email,
@@ -30,6 +30,21 @@ const userModel = {
     const [results] = await db.query(
       "insert into user (firstname, lastname, email, hashedPassword, pseudo, avatar ) values (?,?,?,?,?,?)",
       [firstname, lastname, email, hashedPassword, pseudo, avatar]
+    );
+    return results;
+  },
+  addUserWithRole: async ({
+    firstname,
+    lastname,
+    email,
+    hashedPassword,
+    avatar,
+    pseudo,
+    role,
+  }) => {
+    const [results] = await db.query(
+      "insert into user (firstname, lastname, email, hashedPassword, pseudo, avatar, role ) values (?,?,?,?,?,?,?)",
+      [firstname, lastname, email, hashedPassword, pseudo, avatar, role]
     );
     return results;
   },
@@ -49,10 +64,11 @@ const userModel = {
       throw new Error(error.message);
     }
   },
-  updatePassword: async (password) => {
-    const [results] = await db.query("update user set hashedPassword = ?", [
-      password,
-    ]);
+  updatePassword: async (id, password) => {
+    const [results] = await db.query(
+      "update user set hashedPassword = ? where id=?",
+      [password, id]
+    );
     return results;
   },
 

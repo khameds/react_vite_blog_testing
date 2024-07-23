@@ -1,0 +1,336 @@
+openapi: 3.0.0
+info:
+  title: API Documentation
+  version: 1.0.0
+  description: Documentation de l'API
+
+paths:
+  /api:
+    get:
+      summary: Home
+      responses:
+        '200':
+          description: Succès
+  /api/users:
+    get:
+      summary: Get all users
+      responses:
+        '200':
+          description: Succès
+  /api/users/profile:
+    get:
+      summary: Get user by ID
+      responses:
+        '200':
+          description: Succès
+  /api/users/register:
+    post:
+      summary: Register a new user without role
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+      responses:
+        '201':
+          description: Utilisateur créé
+  /api/users/signup:
+    post:
+      summary: Register a new admin user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+      responses:
+        '201':
+          description: Utilisateur admin créé
+  /api/users/reset-password:
+    patch:
+      summary: Reset password
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                password:
+                  type: string
+      responses:
+        '200':
+          description: Mot de passe mis à jour
+  /api/users/{id}:
+    patch:
+      summary: Update user
+      parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: Utilisateur mis à jour
+  /api/user/disabled-user:
+    patch:
+      summary: Disable user account
+      responses:
+        '200':
+          description: Compte désactivé
+  /api/users/login:
+    post:
+      summary: User login
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+      responses:
+        '200':
+          description: Connexion réussie
+  /api/users/logout:
+    post:
+      summary: User logout
+      responses:
+        '200':
+          description: Déconnexion réussie
+
+  /api/articles:
+    post:
+      summary: Create a new article
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                content:
+                  type: string
+      responses:
+        '201':
+          description: Article créé
+    get:
+      summary: Get all articles
+      responses:
+        '200':
+          description: Liste des articles
+  /api/articles/user:
+    get:
+      summary: Get articles by user
+      responses:
+        '200':
+          description: Liste des articles par utilisateur
+  /api/articles/users/count:
+    get:
+      summary: Get article count by user
+      responses:
+        '200':
+          description: Nombre d'articles par utilisateur
+  /api/articles/{id}:
+    get:
+      summary: Get an article by ID
+      parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Article trouvé
+    put:
+      summary: Update an article by ID
+      parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                content:
+                  type: string
+      responses:
+        '200':
+          description: Article mis à jour
+    delete:
+      summary: Delete an article by ID
+      parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Article supprimé
+
+  /api/categories:
+    post:
+      summary: Create a new category
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+      responses:
+        '201':
+          description: Catégorie créée
+    get:
+      summary: Get all categories
+      responses:
+        '200':
+          description: Liste des catégories
+  /api/categories/{id}:
+    get:
+      summary: Get a category by ID
+      parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Catégorie trouvée
+    put:
+      summary: Update a category by ID
+      parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+      responses:
+        '200':
+          description: Catégorie mise à jour
+    delete:
+      summary: Delete a category by ID
+      parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Catégorie supprimée
+
+  /api/comments:
+    post:
+      summary: Create a new comment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                articleId:
+                  type: string
+                content:
+                  type: string
+      responses:
+        '201':
+          description: Commentaire créé
+    get:
+      summary: Get all comments
+      responses:
+        '200':
+          description: Liste des commentaires
+  /api/comments/users/count:
+    get:
+      summary: Get comment count by user
+      responses:
+        '200':
+          description: Nombre de commentaires par utilisateur
+  /api/comments/{id}:
+    get:
+      summary: Get a comment by ID
+      parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Commentaire trouvé
+    put:
+      summary: Update a comment by ID
+      parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                content:
+                  type: string
+      responses:
+        '200':
+          description: Commentaire mis à jour
+    delete:
+      summary: Delete a comment by ID
+      parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Commentaire supprimé
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+security:
+- bearerAuth: []

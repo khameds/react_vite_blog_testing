@@ -1,18 +1,19 @@
-const validationEmailAndPassword = (req, res, next) => {
+const validationPassword = (req, res, next) => {
   try {
-    const { email, password } = req.body;
+    const { newPassword, oldPassword } = req.body;
 
-    if (!email || !password) {
-      return res.status(400).json({
+    if (!newPassword || !oldPassword) {
+      res.status(401).json({
         success: false,
-        status: 400,
-        message: "Vos données ne sont pas valides",
+        status: 401,
+        message: "Vérifier vos données !",
       });
+      return;
     }
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
     const passwordRegex =
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-    if (!emailRegex.test(email) || !passwordRegex.test(password)) {
+    if (!passwordRegex.test(newPassword)) {
       return res.status(400).json({
         success: false,
         status: 400,
@@ -29,4 +30,4 @@ const validationEmailAndPassword = (req, res, next) => {
   }
 };
 
-module.exports = validationEmailAndPassword;
+module.exports = validationPassword;

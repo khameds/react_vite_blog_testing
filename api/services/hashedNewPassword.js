@@ -1,16 +1,8 @@
 const argon2 = require("argon2");
 
 const hashNewPassword = (req, res, next) => {
-  const { newPassword, oldPassword } = req.body;
-  console.log("req.body :>> ", req.body);
-  if (!newPassword || !oldPassword) {
-    res.status(401).json({
-      success: false,
-      status: 401,
-      message: "Vérifier vos données !",
-    });
-    return;
-  }
+  const { newPassword } = req.body;
+
   const hashingOptions = {
     type: argon2.argon2id,
     memoryCost: 2 ** 16,

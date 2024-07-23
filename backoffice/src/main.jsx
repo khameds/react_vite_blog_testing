@@ -4,8 +4,8 @@ import ReactDOM from "react-dom/client";
 import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 import App from "./App.jsx";
 import Layout from "./components/layout/layout.jsx";
-import Team from "./components/team.jsx";
 import "./index.css";
+import Team from "./pages/team.jsx";
 
 function AppLayout() {
   return (
@@ -20,8 +20,8 @@ const router = createBrowserRouter([
     element: <AppLayout />,
     children: [
       { path: "/", element: <App /> },
-      { path: "team", element: <Team /> },
-      // { path: "contact", element: <Contact /> },
+      { path: "equipe", element: <Team /> },
+      // { path: "utilisateur", element: <Contact /> },
       // { path: "workshops", element: <Workshop /> },
       // { path: "signup", element: <Signup /> },
       // { path: "login", element: <Login /> },

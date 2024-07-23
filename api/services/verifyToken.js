@@ -22,9 +22,12 @@ const verifyToken = (req, res, next) => {
         message: "Erreur d'authentification, vérifier le type de token",
       });
     }
+    console.log("token :>> ", token);
+
     // de verifier le token
     const { payload } = jwt.verify(token, process.env.SECRET_KEY_JWT);
     req.payload = payload;
+    console.log("payload :>> ", payload);
 
     next();
   } catch (error) {

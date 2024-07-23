@@ -53,10 +53,10 @@ const userController = {
       });
     }
   },
-  addUser: async (req, res) => {
+  addUserWithoutRole: async (req, res) => {
     try {
       const user = await userModel.getUserByEmail(req.body.email);
-      console.log("user :>> ", user.length);
+
       if (user.length !== 0) {
         res.status(409).json({
           success: false,
@@ -64,7 +64,7 @@ const userController = {
           message: `cet email ${user[0].email} est déjà utilisé par un autre utlisateur !`,
         });
       } else {
-        const results = await userModel.addUser(req.body);
+        const results = await userModel.addUserWithoutRole(req.body);
         if (results.affectedRows) {
           res.status(201).json({
             success: true,
@@ -81,10 +81,36 @@ const userController = {
       });
     }
   },
+  addUserWithRole: async (req, res) => {
+    try {
+      const user = await userModel.getUserByEmail(req.body.email);
 
+      if (user.length !== 0) {
+        res.status(409).json({
+          success: false,
+          status: 409,
+          message: `cet email ${user[0].email} est déjà utilisé par un autre utlisateur !`,
+        });
+      } else {
+        const results = await userModel.addUserWithRole(req.body);
+        if (results.affectedRows) {
+          res.status(201).json({
+            success: true,
+            status: 201,
+            message: `Félicitaion ! votre compte à été bien créer`,
+          });
+        }
+      }
+    } catch (error) {
+      res.status(500).json({
+        success: false,
+        status: 500,
+        message: error.message,
+      });
+    }
+  },
   updateUser: async (req, res) => {
     try {
-      const { id } = req.params;
       if (req.body.password || req.body.email) {
         res.status(401).json({
           success: false,
@@ -93,7 +119,8 @@ const userController = {
         });
         return;
       }
-      const results = await userModel.updateUser(id, req.body);
+
+      const results = await userModel.updateUser(req.payload, req.body);
       if (results.affectedRows) {
         res.status(200).json({
           success: true,
@@ -112,10 +139,9 @@ const userController = {
 
   updatePassword: async (req, res) => {
     try {
-      const { email, oldPassword, hashedPassword } = req.body;
+      const { oldPassword, hashedPassword } = req.body;
 
-      const user = await userModel.getUserByEmail(email);
-
+      const user = await userModel.getUserById(req.payload);
       if (user.length) {
         const isMatch = await argon2.verify(
           user[0].hashedPassword,
@@ -123,7 +149,10 @@ const userController = {
         );
 
         if (typeof isMatch === "boolean" && isMatch) {
-          const result = await userModel.updatePassword(hashedPassword);
+          const result = await userModel.updatePassword(
+            req.payload,
+            hashedPassword
+          );
 
           if (result.affectedRows) {
             res.status(200).json({
@@ -153,7 +182,7 @@ const userController = {
       const [user] = await userModel.disableUserAccount(req.payload);
       if (user.affectedRows) {
         res.status(200).json({
-          success: false,
+          success: true,
           status: 200,
           message: "La désactivation du compte a été effectuée avec succès",
         });

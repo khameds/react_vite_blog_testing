@@ -65,8 +65,18 @@ const commentController = {
 
   deleteCommentById: async (req, res) => {
     try {
+      const [comment] = await commentModel.getCommentById(req.params.id);
+
+      if (comment.user_id !== req.payload) {
+        return res.status(401).json({
+          success: false,
+          status: 404,
+          message: "Vous n'êtes pas à réaliser cette opération !",
+        });
+      }
+
       const result = await commentModel.deleteCommentById(
-        req.params.id,
+        parseInt(req.params.id),
         req.payload
       );
       if (result.affectedRows === 0) {
