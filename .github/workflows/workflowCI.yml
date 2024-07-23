@@ -1,68 +1,36 @@
-name: Workflow CI
+name: Setup MySQL Database
 
-on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+on: [push]
 
 jobs:
-  build:
+  setup-db:
     runs-on: ubuntu-latest
+
     env:
       APP_PORT: ${{ secrets.APP_PORT }}
       APP_HOST: ${{ secrets.APP_HOST }}
-      DB_HOST: 127.0.0.1
-      DB_USER: root
-      DB_PASSWORD: ${{ secrets.DB_ROOT_PASSWORD }}
+      DB_HOST: ${{ secrets.DB_HOST }}
+      DB_USER: ${{ secrets.DB_USER }}
+      DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
       DB_NAME: ${{ secrets.DB_NAME }}
       DB_PORT: ${{ secrets.DB_PORT }}
       SECRET_KEY_JWT: ${{ secrets.SECRET_KEY_JWT }}
       FRONTEND_URL: ${{ secrets.FRONTEND_URL }}
       FRONTEND_URL_BACKOFFICE: ${{ secrets.FRONTEND_URL_BACKOFFICE }}
 
-    services:
-      mysql:
-        image: mysql:5.7
-        env:
-          MYSQL_ROOT_PASSWORD: ${{ secrets.DB_ROOT_PASSWORD }}
-          MYSQL_DATABASE: ${{ secrets.DB_NAME }}
-        ports:
-          - 3306:3306
-        options: >-
-          --health-cmd="mysqladmin ping --silent"
-          --health-interval=10s
-          --health-timeout=5s
-          --health-retries=3
-
     steps:
-    - uses: actions/checkout@v3
-    - uses: actions/setup-node@v4
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up MySQL
+      uses: mirromutth/mysql-action@v1.1.1
       with:
-        node-version: 'node'
+        mysql-version: '8.0'
+        mysql-root-password: ${{ secrets.DB_PASSWORD }}
+        mysql-database: ${{ secrets.DB_NAME }}
+        mysql-user: ${{ secrets.DB_USER }}
+        mysql-password: ${{ secrets.DB_PASSWORD }}
 
-    - name: Wait for MySQL to be ready
+    - name: Run MySQL commands
       run: |
-        until mysqladmin ping -h "127.0.0.1" --silent; do
-          echo 'waiting for mysql...'
-          sleep 10
-        done
-
-    - name: Check MySQL service status
-      run: |
-        docker ps
-
-    - name: Run database migrations
-      run: |
-        mysql -u root -p${{ secrets.DB_ROOT_PASSWORD }} -e "CREATE DATABASE IF NOT EXISTS ${{ secrets.DB_NAME }};"
-
-    - name: Check MySQL logs
-      run: |
-        docker logs $(docker ps -q --filter ancestor=mysql:5.7)
-       # Project stuff   
-    - run: npm run setup --if-present
-    - run: npm run db:migrate --if-present
-    - run: npm run db:seed --if-present
-    - run: npm run dev --if-present
-    - run: npm run test --if-present
-    - run: npm run test --if-present
+        mysql -h ${{ secrets.DB_HOST }} -P ${{ secrets.DB_PORT }} -u ${{ secrets.DB_USER }} -p${{ secrets.DB_PASSWORD }} -e "CREATE DATABASE IF NOT EXISTS ${{ secrets.DB_NAME }};"
