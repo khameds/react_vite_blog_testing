@@ -10,9 +10,11 @@
     "dev": "concurrently -n front,back -c green,yellow -t \"HH:mm:ss\" -p \"{name} {time}\" \"npm --prefix ./client run dev\" \"npm --prefix ./api run dev\"",
     "dev-front": "npm --prefix ./client run dev",
     "dev-back": "npm --prefix ./api run dev",
+    "cy:run" : "cypress run",
     "cy:open": "cypress open",
-    "pm:newman": "newman run newman/cat_blog_postman_collection_23_07.json",
+    "pm:run": "newman run newman/cat_blog_postman_collection_23_07.json",
     "pm:report": "newman run newman/cat_blog_postman_collection_23_07.json --reporters=cli,htmlextra",
+    "jm:run" : "jmeter -n -t jmeter/HTTP_Request.jmx -l /jmeter/results.csv",
     "test" : "TODO"
   },
   "keywords": [],
