@@ -12,7 +12,7 @@ app.use(
     origin: [process.env.FRONTEND_URL, process.env.FRONTEND_URL_BACKOFFICE],
   })
 );
-
+console.log('process', process.env.FRONTEND_URL_BACKOFFICE);
 app.use(express.json());
 const swaggerDocument = YAML.load("./swagger.yml");
 

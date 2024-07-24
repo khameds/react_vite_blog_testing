@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "setup": "npm i && npm --prefix ./client i && npm --prefix ./api i",
+    "setup": "npm i && npm --prefix ./client i && npm --prefix ./api i && npm --prefix ./backoffice i",
     "db:migrate": "cd ./api && node migrate.js",
     "db:seed": "cd ./api && node seed.js",
     "dev": "concurrently -n front,back -c green,yellow -t \"HH:mm:ss\" -p \"{name} {time}\" \"npm --prefix ./client run dev\" \"npm --prefix ./api run dev\"",

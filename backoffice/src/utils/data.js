@@ -1,14 +1,12 @@
 export const navigation = [
-  { name: "Dashboard", href: "/" },
-  { name: "Création de user", href: "#" },
-  { name: "Gestion des articles", href: "#" },
-  { name: "Reports", href: "#" },
-  { name: "Équipe", href: "equipe" },
+  { name: "Dashboard", href: "/admin/dashboard" },
+  { name: "Création de user", href: "/admin/creation-utilisateur" },
+  { name: "Gestion des articles", href: "/admin/gestion-articles" },
+  { name: "Équipe", href: "/admin/equipe" },
 ];
 export const userNavigation = [
-  { name: "Your Profile", href: "#" },
-  { name: "Settings", href: "#" },
-  { name: "Sign out", href: "#" },
+  { name: "Votre profile", href: "/admin/profile" },
+  { name: "Se déconnecter", href: "/deconnexion" },
 ];
 export const user = {
   name: "Tom Cook",
