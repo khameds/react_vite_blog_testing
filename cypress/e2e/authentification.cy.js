@@ -18,7 +18,7 @@ describe("Authentification success", () => {
     });
   });
 
-  it("Login a regular user", function () {
+  it("Login as a regular user", function () {
     cy.signin(userMail, userPassword)
     .then(() => {
 
