@@ -82,8 +82,6 @@ const seed = async () => {
     const categoryId = result[0][0].id;
     console.log("%capiseed.js:77 categoryId", "color: #007acc;", categoryId);
 
-    console.info(`${DB_NAME} updated`);
-
     /////////////////////////////////////////////////////////////////
     // Execute the SQL statements to create an article
     /////////////////////////////////////////////////////////////////
@@ -94,6 +92,17 @@ const seed = async () => {
     result = await database.query("SELECT * FROM article");
     const articleId = result[0][0].id;
     console.log("%capiseed.js:77 articleId", "color: #007acc;", articleId);
+
+    /////////////////////////////////////////////////////////////////
+    // Execute the SQL statements to create an article
+    /////////////////////////////////////////////////////////////////
+    await database.query(
+      "INSERT INTO comment (description, article_id, user_id) VALUES (?, ?, ?)",
+      ["commentDescription", articleId, userId]
+    );
+    result = await database.query("SELECT * FROM comment");
+    const commentId = result[0][0].id;
+    console.log("%capiseed.js:77 commentId", "color: #007acc;", commentId);
 
     console.info(`${DB_NAME} updated`);
 
