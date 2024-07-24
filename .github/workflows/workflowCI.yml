@@ -1,45 +1,37 @@
-# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
+name: Setup MySQL Database
 
-name: Workflow CI
-
-on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+on: [push]
 
 jobs:
-  build:
-
+  setup-db:
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [14.x, 16.x, 18.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+    env:
+      APP_PORT: ${{ secrets.APP_PORT }}
+      APP_HOST: ${{ secrets.APP_HOST }}
+      DB_HOST: ${{ secrets.DB_HOST }}
+      DB_USER: ${{ secrets.DB_USER }}
+      DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+      DB_NAME: ${{ secrets.DB_NAME }}
+      DB_PORT: ${{ secrets.DB_PORT }}
+      SECRET_KEY_JWT: ${{ secrets.SECRET_KEY_JWT }}
+      FRONTEND_URL: ${{ secrets.FRONTEND_URL }}
+      FRONTEND_URL_BACKOFFICE: ${{ secrets.FRONTEND_URL_BACKOFFICE }}
+      MYSQL_PWD: ${{ secrets.DB_ROOT_PASSWORD }}
 
     steps:
-    - uses: actions/checkout@v4
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-    - name: Setup MySQL
-    # You may pin to the exact commit or the version.
-    # uses: mirromutth/mysql-action@de1fba8b3f90ce8db80f663a7043be3cf3231248
-      uses: mirromutth/mysql-action@v1.1
-      with:
-        # Using latest MySQL Version
-        host port: 3306
-        container port: 3306  
-        mysql database: db_project
-        # MYSQL_USER - create the specified user with superuser power for created database
-        mysql user: smail
-        mysql password: d8r8y #TODO out it in repo secrets
-          
-    - run: npm install
-    - run: npm run setup --if-present
-    - run: npm run dev --if-present
-    - run: npm run test --if-present
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Install MySQL
+      run: sudo apt-get update && sudo apt-get install -y mysql-server
+
+    - name: Start MySQL service
+      run: sudo service mysql start
+
+    - name: Set up MySQL database
+      run: |
+        mysql -e "CREATE DATABASE IF NOT EXISTS ${{ secrets.DB_NAME }};"
+        mysql -e "CREATE USER IF NOT EXISTS '${{ secrets.DB_USER }}'@'%' IDENTIFIED BY '${{ secrets.DB_ROOT_PASSWORD }}';"
+        mysql -e "GRANT ALL PRIVILEGES ON ${{ secrets.DB_NAME }}.* TO '${{ secrets.DB_USER }}'@'%';"
+        mysql -e "FLUSH PRIVILEGES;"
