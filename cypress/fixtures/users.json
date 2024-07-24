@@ -1,6 +1,11 @@
 {
   "adminMail": "admin@mail.com",
   "adminPassword": "Azerty123!",
+  "adminPseudo": "Admin",
+
   "userMail": "user@mail.com",
-  "userPassword": "Azerty123!"
+  "userPassword": "Azerty123!",
+  "userPseudo": "User",
+
+  "avatar": ""
 }
