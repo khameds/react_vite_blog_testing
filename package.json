@@ -10,12 +10,12 @@
     "dev": "concurrently -n front,back -c green,yellow -t \"HH:mm:ss\" -p \"{name} {time}\" \"npm --prefix ./client run dev\" \"npm --prefix ./api run dev\"",
     "dev-front": "npm --prefix ./client run dev",
     "dev-back": "npm --prefix ./api run dev",
-    "cy:run" : "cypress run",
+    "cy:run": "cypress run",
     "cy:open": "cypress open",
     "pm:run": "newman run newman/cat_blog_postman_collection_23_07.json",
     "pm:report": "newman run newman/cat_blog_postman_collection_23_07.json --reporters=cli,htmlextra",
-    "jm:run" : "jmeter -n -t jmeter/HTTP_Request.jmx -l /jmeter/results.csv",
-    "test" : "TODO"
+    "jm:run": "jmeter -n -t jmeter/HTTP_Request.jmx -l /jmeter/results.csv",
+    "test": "TODO"
   },
   "keywords": [],
   "author": "",
@@ -24,6 +24,7 @@
     "concurrently": "^8.2.2"
   },
   "devDependencies": {
+    "@faker-js/faker": "^8.4.1",
     "cypress": "^13.13.1",
     "newman": "^6.1.3",
     "newman-reporter-htmlextra": "^1.23.1"
