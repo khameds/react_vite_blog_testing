@@ -41,8 +41,8 @@ const seed = async () => {
         "Richardson",
         "user@mail.com",
         hashedPassword,
-        "user",
-        "",
+        "Jack",
+        "https://i.ibb.co/d7MH2PL/YumYum.jpg",
       ]
     );
     let result = await database.query("SELECT id FROM user WHERE email = (?)", [
@@ -61,8 +61,8 @@ const seed = async () => {
         "Ondra",
         "admin@mail.com",
         hashedPassword,
-        "admin",
-        "",
+        "Harry Potter L'apprenti sorcier",
+        "https://i.ibb.co/d7MH2PL/YumYum.jpg",
         "admin",
       ]
     );
