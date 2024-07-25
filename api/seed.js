@@ -37,8 +37,8 @@ const seed = async () => {
     await database.query(
       "INSERT INTO user (firstname, lastname, email, hashedPassword, pseudo, avatar ) values (?,?,?,?,?,?)",
       [
-        "userFirstname",
-        "userLastname",
+        "Jackson",
+        "Richardson",
         "user@mail.com",
         hashedPassword,
         "user",
@@ -57,8 +57,8 @@ const seed = async () => {
     await database.query(
       "INSERT INTO user (firstname, lastname, email, hashedPassword, pseudo, avatar, role) values (?,?,?,?,?,?,?)",
       [
-        "adminFirstname",
-        "adminLastname",
+        "Adam",
+        "Ondra",
         "admin@mail.com",
         hashedPassword,
         "admin",
