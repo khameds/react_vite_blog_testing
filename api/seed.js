@@ -105,13 +105,14 @@ const seed = async () => {
     /////////////////////////////////////////////////////////////////
     // Execute the SQL statements to create a comment
     /////////////////////////////////////////////////////////////////
-    
+    let commentaryPerArticle = 3;
     for (let i = 1; i <= categoriesIds.length * articleNumberPerCategory; i++) {
+      for (let j = 0; j < commentaryPerArticle; j++) {
       await database.query(
         "INSERT INTO comment (description, article_id, user_id) VALUES (?, ?, ?)",
         [faker.lorem.sentence(5), i, userId]
       );  
-    }
+    }}
     [result] = await database.query("SELECT * FROM comment");
     console.log("%capiseed.js:77 commentId", "color: #007acc;", result);
 
