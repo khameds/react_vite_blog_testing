@@ -5,7 +5,7 @@ const verifyToken = (req, res, next) => {
   try {
     const tokenInHeaders = req.get("Authorization");
     if (!tokenInHeaders) {
-      res.status(401).json({
+      return res.status(401).json({
         success: false,
         status: 401,
         message:
@@ -14,9 +14,9 @@ const verifyToken = (req, res, next) => {
     }
 
     const [type, token] = tokenInHeaders.split(" ");
-
+    console.log("token :>> ", token);
     if (type !== "Bearer") {
-      res.status(401).json({
+      return res.status(401).json({
         success: false,
         status: 401,
         message: "Erreur d'authentification, vérifier le type de token",

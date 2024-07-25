@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
@@ -7,11 +8,19 @@ const EditArticle = ({ show, onClose, categories, article, onUpdate }) => {
   const [formDataArticle, setFormDataArticle] = useState({
     title: "",
     description: "",
-    category: "",
+    category_id: "",
   });
+  // Function to get id of the category in function of the name
+  const getCategoryIdFromName = (name) => {
+    const category = categories.find((cat) => cat.name === name);
+    return category ? category.id : "";
+  };
   useEffect(() => {
     if (article) {
-      const category = categories.find((cat) => cat.name === article.category);
+      const category = categories.find(
+        (cat) => console.log(cat) || cat.name === article.category_name
+      );
+
       setFormDataArticle({
         title: article.title || "",
         description: article.description || "",
@@ -21,7 +30,6 @@ const EditArticle = ({ show, onClose, categories, article, onUpdate }) => {
   }, [article, categories]);
 
   const getToken = () => localStorage.getItem("token");
-  console.log(article.article_id);
 
   // Function to edit an article
   const handleEditArticleSubmit = async (event) => {
@@ -48,7 +56,7 @@ const EditArticle = ({ show, onClose, categories, article, onUpdate }) => {
       }
 
       toast.success("Modification de l'article réussie !");
-      onUpdate(); 
+      onUpdate();
       onClose();
     } catch (err) {
       console.error("Erreur :>> ", err);
@@ -61,11 +69,6 @@ const EditArticle = ({ show, onClose, categories, article, onUpdate }) => {
       ...formDataArticle,
       [name]: value,
     });
-  };
-  // Function to get id of the category in function of the name 
-  const getCategoryIdFromName = (name) => {
-    const category = categories.find((cat) => cat.name === name);
-    return category ? category.id : "";
   };
 
   if (!show) return null;
@@ -115,7 +118,11 @@ const EditArticle = ({ show, onClose, categories, article, onUpdate }) => {
                 }}
                 name="category"
                 id="category"
-                value={categories.find(cat => cat.id === formDataArticle.category_id)?.name || ''}
+                value={
+                  categories.find(
+                    (cat) => cat.id === formDataArticle.category_id
+                  )?.name || ""
+                }
                 required
               >
                 {categories.map((cat) => (
@@ -140,8 +147,7 @@ EditArticle.propTypes = {
   onClose: PropTypes.func.isRequired,
   categories: PropTypes.array.isRequired,
   article: PropTypes.object.isRequired,
-    onUpdate: PropTypes.func.isRequired, 
-
+  onUpdate: PropTypes.func.isRequired,
 };
 
 export default EditArticle;

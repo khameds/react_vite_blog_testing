@@ -2,13 +2,14 @@ const validationPassword = (req, res, next) => {
   try {
     const { newPassword, oldPassword } = req.body;
 
+    console.log("newPassword :>> ", newPassword);
+    console.log("oldPassword :>> ", oldPassword);
     if (!newPassword || !oldPassword) {
-      res.status(401).json({
+      return res.status(401).json({
         success: false,
         status: 401,
         message: "Vérifier vos données !",
       });
-      return;
     }
 
     const passwordRegex =

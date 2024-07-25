@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
+import background from "../assets/background.jpeg";
 import logo from "../assets/logo.png";
 import Button from "../components/Button";
 import styles from "./Home.module.css";
-import background from "../assets/background.jpeg"
 const Home = () => {
   const [formData, setFormData] = useState({
     firstname: "",
@@ -14,7 +14,7 @@ const Home = () => {
     pseudo: "",
     avatar: "",
   });
-  const [showLogin, setShowLogin] = useState(true); 
+  const [showLogin, setShowLogin] = useState(true);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -75,6 +75,9 @@ const Home = () => {
             pseudo: "",
             avatar: "",
           });
+          setTimeout(() => {
+            setShowLogin(true);
+          }, 2000);
         }
       })
       .catch((err) => console.info("err :>> ", err));
@@ -107,126 +110,146 @@ const Home = () => {
       .catch((err) => console.info("err :>> ", err));
   };
 
-  return  (
+  return (
     <div className={styles.homeStyle}>
-    <img className={styles.background} src={background} alt="background image cat with computer" />
-    <div className={styles.rightContainer}>
-      <img src={logo} alt="logo" className={styles.logo} />
-      <div className={styles.homePage}>
-        {showLogin ? (
-          <div className={styles.form}>
-            <h2>Connexion</h2>
-            <form
-              className={styles.loginForm}
-              onSubmit={handleLoginSubmit}
-              id="loginForm"
-            >
-              <div className={styles.formContainer}>
-                <label htmlFor="email">Email:</label>
-                <input type="text" id="email" name="email" required />
-                <br />
-                <label htmlFor="password">Mot de passe:</label>
-                <input type="password" id="password" name="password" required />
-                <br />
-              </div>
-              <Button type="submit">Se connecter</Button>
-              <p className={styles.buttonStyle}>
-                Pas encore connu ?{" "} 
-                <Button className={styles.buttonRegister} type="button" onClick={() => setShowLogin(false)}>
-                  S&apos;enregistrer
-                </Button>
-              </p>
-            </form>
-          </div>
-        ) : (
-          <div className={styles.form}>
-            <h2>Inscription</h2>
-            <form className={styles.registerForm} onSubmit={handleRegisterSubmit}>
-              <div className={styles.formInputs}>
-                <div className={styles.topForm}>
-                  <label htmlFor="firstname">Prénom</label>
-                  <input
-                    type="text"
-                    id="firstname"
-                    name="firstname"
-                    className={styles.inputField}
-                    value={formData.firstname}
-                    onChange={handleChange}
-                    required
-                  />
+      <img
+        className={styles.background}
+        src={background}
+        alt="background image cat with computer"
+      />
+      <div className={styles.rightContainer}>
+        <img src={logo} alt="logo" className={styles.logo} />
+        <div className={styles.homePage}>
+          {showLogin ? (
+            <div className={styles.form}>
+              <h2>Connexion</h2>
+              <form
+                className={styles.loginForm}
+                onSubmit={handleLoginSubmit}
+                id="loginForm"
+              >
+                <div className={styles.formContainer}>
+                  <label htmlFor="email">Email:</label>
+                  <input type="text" id="email" name="email" required />
                   <br />
-                  <label htmlFor="lastname">Nom</label>
-                  <input
-                    type="text"
-                    id="lastname"
-                    name="lastname"
-                    className={styles.inputField}
-                    value={formData.lastname}
-                    onChange={handleChange}
-                    required
-                  />
-                  <br />
-                  <label htmlFor="pseudo">Pseudo</label>
-                  <input
-                    type="text"
-                    id="pseudo"
-                    name="pseudo"
-                    className={styles.inputField}
-                    value={formData.pseudo}
-                    onChange={handleChange}
-                    required
-                  />
-                  <br />
-                </div>
-                <div className={styles.bottomForm}>
-                  <label htmlFor="email">Email</label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    className={styles.inputField}
-                    value={formData.email}
-                    onChange={handleChange}
-                    required
-                  />
-                  <br />
-                  <label htmlFor="password">Mot de passe</label>
+                  <label htmlFor="password">Mot de passe:</label>
                   <input
                     type="password"
                     id="password"
                     name="password"
-                    className={styles.inputField}
-                    value={formData.password}
-                    onChange={handleChange}
                     required
                   />
                   <br />
-
-                  <label htmlFor="avatar">Avatar</label>
-                  <input
-                    type="text"
-                    id="avatar"
-                    name="avatar"
-                    className={styles.inputField}
-                    value={formData.avatar}
-                    onChange={handleChange}
-                  />
-                  <br />
                 </div>
-              </div>
-              <Button type="submit" className={styles.submitButton}>
-                Sinscrire
-              </Button>
-              <p className={styles.buttonStyle}>
-                Déjà inscrit ?{" "} 
-                <Button className={styles.submitButton} type="button" onClick={() => setShowLogin(true)}>
-                  Se connecter
+                <Button type="submit">Se connecter</Button>
+                <p className={styles.buttonStyle}>
+                  Pas encore connu ?{" "}
+                  <Button
+                    className={styles.buttonRegister}
+                    type="button"
+                    onClick={() => setShowLogin(false)}
+                  >
+                    S&apos;enregistrer
+                  </Button>
+                </p>
+              </form>
+            </div>
+          ) : (
+            <div className={styles.form}>
+              <h2>Inscription</h2>
+              <form
+                className={styles.registerForm}
+                onSubmit={handleRegisterSubmit}
+              >
+                <div className={styles.formInputs}>
+                  <div className={styles.topForm}>
+                    <label htmlFor="firstname">Prénom</label>
+                    <input
+                      type="text"
+                      id="firstname"
+                      name="firstname"
+                      className={styles.inputField}
+                      value={formData.firstname}
+                      onChange={handleChange}
+                      required
+                    />
+                    <br />
+                    <label htmlFor="lastname">Nom</label>
+                    <input
+                      type="text"
+                      id="lastname"
+                      name="lastname"
+                      className={styles.inputField}
+                      value={formData.lastname}
+                      onChange={handleChange}
+                      required
+                    />
+                    <br />
+                    <label htmlFor="pseudo">Pseudo</label>
+                    <input
+                      type="text"
+                      id="pseudo"
+                      name="pseudo"
+                      className={styles.inputField}
+                      value={formData.pseudo}
+                      onChange={handleChange}
+                      required
+                    />
+                    <br />
+                  </div>
+                  <div className={styles.bottomForm}>
+                    <label htmlFor="email">Email</label>
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      className={styles.inputField}
+                      value={formData.email}
+                      onChange={handleChange}
+                      required
+                    />
+                    <br />
+                    <label htmlFor="password">Mot de passe</label>
+                    <input
+                      type="password"
+                      id="password"
+                      name="password"
+                      className={styles.inputField}
+                      value={formData.password}
+                      onChange={handleChange}
+                      required
+                    />
+                    <br />
+
+                    <label htmlFor="avatar">Avatar</label>
+                    <input
+                      type="text"
+                      id="avatar"
+                      name="avatar"
+                      className={styles.inputField}
+                      value={formData.avatar}
+                      onChange={handleChange}
+                    />
+                    <br />
+                  </div>
+                </div>
+                <Button type="submit" className={styles.submitButton}>
+                  Sinscrire
                 </Button>
-              </p>
-            </form>
-          </div>
-        )}
-      </div>
+                <p className={styles.buttonStyle}>
+                  Déjà inscrit ?{" "}
+                  <Button
+                    className={styles.submitButton}
+                    type="button"
+                    onClick={() => setShowLogin(true)}
+                  >
+                    Se connecter
+                  </Button>
+                </p>
+              </form>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

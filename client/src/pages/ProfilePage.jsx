@@ -40,7 +40,7 @@ const ProfilePage = ({ categories }) => {
   const handleDisableAccount = () => {
     const token = localStorage.getItem("token");
 
-    fetch(`${import.meta.env.VITE_BACKEND_URL}/api/user/disabled-user`, {
+    fetch(`${import.meta.env.VITE_BACKEND_URL}/api/users/disabled-user`, {
       method: "PATCH",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -59,7 +59,7 @@ const ProfilePage = ({ categories }) => {
 
   useEffect(() => {
     getArticlesByUser();
-  }, [])
+  }, []);
   //Function to delete an article
   const handleDeleteArticle = async (articleId) => {
     await fetch(
@@ -109,18 +109,24 @@ const ProfilePage = ({ categories }) => {
       <Navbar />
       <div className={styles.profilePage}>
         <div className={styles.profile}>
-          <h3>Mon profile </h3><br /><br />
+          <h3>Mon profile </h3>
+          <br />
+          <br />
           {user && (
             <>
-              <p key={user.firstname}><b>Nom : </b>
-               {user.firstname} {user.lastname}
-              </p><br />
+              <p key={user.firstname}>
+                <b>Nom : </b>
+                {user.firstname} {user.lastname}
+              </p>
+              <br />
               <p>
                 <b>Pseudo :</b> {user.pseudo}
-              </p><br />
+              </p>
+              <br />
               <p>
                 <b>Mail :</b> {user.email}
-              </p><br />
+              </p>
+              <br />
             </>
           )}
           <div className={styles.buttonContainer}>
@@ -138,34 +144,39 @@ const ProfilePage = ({ categories }) => {
             </button>
           </div>
         </div>
-        <div className={styles.cardsContainer}>          <h2>Mes articles</h2>
-        
-        <div className={styles.cards}>
-
-          {articlesData.length > 0 ? (
-            articlesData.map((article) => (
-              <div className={styles.card} key={article.article_id}>
-                <h2>{article.title}</h2>
-                <p> <b>Description :</b> <br></br> {article.description}</p>
-                <div className={styles.buttonContainerCard}>
-                  {" "}
-                  <button className={styles.editPassword} onClick={() => handleEditArticle(article)}>
-                    Modifier
-                  </button>
-                  <button
-                    onClick={() => handleDeleteArticle(article.article_id)}
-                    className={styles.buttonDelete}
-                  >
-                    Supprimer
-                  </button>
+        <div className={styles.cardsContainer}>
+          {" "}
+          <h2>Mes articles</h2>
+          <div className={styles.cards}>
+            {articlesData.length > 0 ? (
+              articlesData.map((article) => (
+                <div className={styles.card} key={article.article_id}>
+                  <h2>{article.title}</h2>
+                  <p>
+                    {" "}
+                    <b>Description :</b> <br></br> {article.description}
+                  </p>
+                  <div className={styles.buttonContainerCard}>
+                    {" "}
+                    <button
+                      className={styles.editPassword}
+                      onClick={() => handleEditArticle(article)}
+                    >
+                      Modifier
+                    </button>
+                    <button
+                      onClick={() => handleDeleteArticle(article.article_id)}
+                      className={styles.buttonDelete}
+                    >
+                      Supprimer
+                    </button>
+                  </div>
                 </div>
-                
-              </div>
-            ))
-          ) : (
-            <p>Aucun article trouvé pour les catégories sélectionnées.</p>
-          )}
-        </div>
+              ))
+            ) : (
+              <p>Aucun article trouvé pour les catégories sélectionnées.</p>
+            )}
+          </div>
         </div>
       </div>
       <EditPassword show={showModal} onClose={() => setShowModal(false)} />

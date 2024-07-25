@@ -1,4 +1,5 @@
 require("dotenv").config();
+const { faker } = require('@faker-js/faker');
 const argon2 = require("argon2");
 const { DB_HOST, DB_PORT, DB_USER, DB_PASSWORD, DB_NAME } = process.env;
 const mysql = require("mysql2/promise");
@@ -75,19 +76,21 @@ const seed = async () => {
     /////////////////////////////////////////////////////////////////
     // Execute the SQL statements to create a category
     /////////////////////////////////////////////////////////////////
-    await database.query("INSERT INTO category (name) VALUES (?)", [
-      "testCategory",
-    ]);
-    result = await database.query("SELECT * FROM category");
-    const categoryId = result[0][0].id;
-    console.log("%capiseed.js:77 categoryId", "color: #007acc;", categoryId);
+    const categories = ["Postman", "Cypress", "JMeter", "Selenium"];
+    let placeholders = categories.map(() => '(?)').join(', ');
+    await database.query(`INSERT INTO category (name) VALUES ${placeholders}`, categories);
+
+    [result] = await database.query("SELECT * FROM category");
+    const categoriesIds = result.map(category => category.id);
+    const categoryId = result[0].id;
+    console.log("%capiseed.js:77 categoryIds", "color: #007acc;", categoriesIds);
 
     /////////////////////////////////////////////////////////////////
     // Execute the SQL statements to create an article
     /////////////////////////////////////////////////////////////////
     await database.query(
       "INSERT INTO article (title, description, category_id, user_id) VALUES (?, ?, ?, ?)",
-      ["articleTitle", "articleDescription", categoryId, userId]
+      [faker.company.catchPhrase(), faker.lorem.sentence(1), categoryId, userId]
     );
     result = await database.query("SELECT * FROM article");
     const articleId = result[0][0].id;

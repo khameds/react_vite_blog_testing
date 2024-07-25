@@ -1,27 +1,28 @@
-
 import PropTypes from "prop-types";
-import styles from "./EditPassword.module.css";
 import { useState } from "react";
 import { toast } from "sonner";
+import styles from "./EditPassword.module.css";
 
 export const EditPassword = ({ show, onClose }) => {
   const [passwordData, setPasswordData] = useState({
-    email: "",
     oldPassword: "",
     newPassword: "",
   });
-
+  const getToken = () => {
+    return localStorage.getItem("token");
+  };
   // Function to edit password
   const handleChangePasswordSubmit = async (event) => {
     event.preventDefault();
-
+    const token = getToken();
     try {
       const response = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}/api/user/reset-password`,
+        `${import.meta.env.VITE_BACKEND_URL}/api/users/reset-password`,
         {
           method: "PATCH",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify(passwordData),
         }
@@ -38,8 +39,8 @@ export const EditPassword = ({ show, onClose }) => {
       console.error("Erreur :>> ", err);
       toast.error("Erreur lors de la modification");
     }
-  }; 
-  
+  };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setPasswordData({
@@ -64,17 +65,6 @@ export const EditPassword = ({ show, onClose }) => {
           onSubmit={handleChangePasswordSubmit}
         >
           <div className={styles.formContainer}>
-            <div className={styles.input}>
-              <label htmlFor="titre">Email :</label>
-              <input
-                onChange={handleChange}
-                type="text"
-                id="email"
-                name="email"
-                required
-              />
-            </div>
-            <br />
             <div className={styles.input}>
               <label htmlFor="description">Mot de passe actuel :</label>
               <input
@@ -113,5 +103,3 @@ EditPassword.propTypes = {
 };
 
 export default EditPassword;
-
-
