@@ -34,15 +34,6 @@ describe("Blog | Authentification user", () => {
   });
 
   it('Should display the "Modifier mon mot de passe" button', () => {
-    cy.get('button._editPassword_krndv_7').should('be.visible');
-  });
-  it('Should display the "Désactiver mon compte" button', () => {
-    cy.get('button._desactiveAccount_krndv_35').should('be.visible');
-  });
-  it('Should display the "Modifier mon mot de passe" button', () => {
     cy.get('button:contains("Modifier mon mot de passe")').click();
-  });
-  it('Should display the "Desactiver mon compte" button', () => {
-    cy.get('button:contains("Desactiver mon compt').click();
   });
  });

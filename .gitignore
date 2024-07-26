@@ -1,5 +1,6 @@
 # Reports from newman
 newman/*.html
+~*
 
 # Logs
 logs
