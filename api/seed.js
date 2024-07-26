@@ -37,12 +37,12 @@ const seed = async () => {
     await database.query(
       "INSERT INTO user (firstname, lastname, email, hashedPassword, pseudo, avatar ) values (?,?,?,?,?,?)",
       [
-        "userFirstname",
-        "userLastname",
+        "Jackson",
+        "Richardson",
         "user@mail.com",
         hashedPassword,
-        "user",
-        "",
+        "Jack",
+        "https://i.ibb.co/d7MH2PL/YumYum.jpg",
       ]
     );
     let result = await database.query("SELECT id FROM user WHERE email = (?)", [
@@ -57,12 +57,12 @@ const seed = async () => {
     await database.query(
       "INSERT INTO user (firstname, lastname, email, hashedPassword, pseudo, avatar, role) values (?,?,?,?,?,?,?)",
       [
-        "adminFirstname",
-        "adminLastname",
+        "Adam",
+        "Ondra",
         "admin@mail.com",
         hashedPassword,
-        "admin",
-        "",
+        "Harry Potter L'apprenti sorcier",
+        "https://i.ibb.co/d7MH2PL/YumYum.jpg",
         "admin",
       ]
     );
@@ -88,24 +88,33 @@ const seed = async () => {
     /////////////////////////////////////////////////////////////////
     // Execute the SQL statements to create an article
     /////////////////////////////////////////////////////////////////
-    await database.query(
-      "INSERT INTO article (title, description, category_id, user_id) VALUES (?, ?, ?, ?)",
-      [faker.company.catchPhrase(), faker.lorem.sentence(1), categoryId, userId]
-    );
-    result = await database.query("SELECT * FROM article");
-    const articleId = result[0][0].id;
-    console.log("%capiseed.js:77 articleId", "color: #007acc;", articleId);
+    let articleNumberPerCategory = 5;
+    for (let i = 1; i <= categoriesIds.length; i++) {
+      for (let j = 0; j < articleNumberPerCategory; j++) {
+        await database.query(
+          "INSERT INTO article (title, description, category_id, user_id) VALUES (?, ?, ?, ?)",
+          [faker.company.catchPhrase(), faker.lorem.sentence(3), i, userId]
+        );  
+      }
+    }
+    
+    [result] = await database.query("SELECT * FROM article");
+    // const articleId = result[0][0].id;
+    console.log("%capiseed.js:77 articleId", "color: #007acc;", result);
 
     /////////////////////////////////////////////////////////////////
-    // Execute the SQL statements to create an article
+    // Execute the SQL statements to create a comment
     /////////////////////////////////////////////////////////////////
-    await database.query(
-      "INSERT INTO comment (description, article_id, user_id) VALUES (?, ?, ?)",
-      ["commentDescription", articleId, userId]
-    );
-    result = await database.query("SELECT * FROM comment");
-    const commentId = result[0][0].id;
-    console.log("%capiseed.js:77 commentId", "color: #007acc;", commentId);
+    let commentaryPerArticle = 3;
+    for (let i = 1; i <= categoriesIds.length * articleNumberPerCategory; i++) {
+      for (let j = 0; j < commentaryPerArticle; j++) {
+      await database.query(
+        "INSERT INTO comment (description, article_id, user_id) VALUES (?, ?, ?)",
+        [faker.lorem.sentence(5), i, userId]
+      );  
+    }}
+    [result] = await database.query("SELECT * FROM comment");
+    console.log("%capiseed.js:77 commentId", "color: #007acc;", result);
 
     console.info(`${DB_NAME} updated`);
 

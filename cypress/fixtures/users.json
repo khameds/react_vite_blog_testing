@@ -2,10 +2,14 @@
   "adminMail": "admin@mail.com",
   "adminPassword": "Azerty123!",
   "adminPseudo": "Admin",
+  "adminFistname" : "Adam",
+  "adminLastname" : "Ondra",
 
   "userMail": "user@mail.com",
   "userPassword": "Azerty123!",
   "userPseudo": "User",
+  "userFirstname" : "Richardson",
+  "userLastname" :"Jackson",
 
   "avatar": ""
 }
