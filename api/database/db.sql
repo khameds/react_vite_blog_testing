@@ -9,9 +9,9 @@ SET FOREIGN_KEY_CHECKS = 1;
 
 CREATE TABLE user (
     id INT PRIMARY KEY auto_increment,
-    firstname VARCHAR(50) NOT NULL,
-    lastname VARCHAR(50) NOT NULL,
-    pseudo VARCHAR(50) NOT NULL DEFAULT 'unknown',
+    firstname VARCHAR(100) NOT NULL,
+    lastname VARCHAR(100) NOT NULL,
+    pseudo VARCHAR(100) NOT NULL DEFAULT 'unknown',
     email VARCHAR(255) UNIQUE NOT NULL,
     hashedPassword text NOT NULL,
     avatar VARCHAR(255),
@@ -20,6 +20,7 @@ CREATE TABLE user (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
+
 CREATE TABLE category (
     id INT PRIMARY KEY auto_increment,
     name VARCHAR(50) NOT NULL UNIQUE,
@@ -28,8 +29,8 @@ CREATE TABLE category (
 );
 CREATE TABLE article (
     id INT PRIMARY KEY auto_increment,
-    title VARCHAR(50) NOT NULL,
-    description VARCHAR(50) NOT NULL,
+    title VARCHAR(100) NOT NULL,
+    description VARCHAR(250) NOT NULL,
     category_id INT NOT NULL,
     user_id INT NOT NULL,
     CONSTRAINT fk_article_category FOREIGN KEY (category_id) REFERENCES category(id) ON DELETE CASCADE,

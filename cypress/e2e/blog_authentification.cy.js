@@ -1,4 +1,6 @@
 import { faker } from "@faker-js/faker";
+import '@percy/cypress';
+
 const {
   adminMail,
   adminPassword,
@@ -23,6 +25,10 @@ describe("Blog | Authentification success", () => {
     .then(() => {
 
     });
+  });
+
+  it('Visual regression test', () => {
+    cy.percySnapshot('Authentification page');
   });
 });
 

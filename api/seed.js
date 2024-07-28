@@ -37,12 +37,12 @@ const seed = async () => {
     await database.query(
       "INSERT INTO user (firstname, lastname, email, hashedPassword, pseudo, avatar ) values (?,?,?,?,?,?)",
       [
-        "userFirstname",
-        "userLastname",
+        "Jackson",
+        "Richardson",
         "user@mail.com",
         hashedPassword,
-        "user",
-        "",
+        "Jack",
+        "https://i.ibb.co/d7MH2PL/YumYum.jpg",
       ]
     );
     let result = await database.query("SELECT id FROM user WHERE email = (?)", [
@@ -57,12 +57,12 @@ const seed = async () => {
     await database.query(
       "INSERT INTO user (firstname, lastname, email, hashedPassword, pseudo, avatar, role) values (?,?,?,?,?,?,?)",
       [
-        "adminFirstname",
-        "adminLastname",
+        "Adam",
+        "Ondra",
         "admin@mail.com",
         hashedPassword,
-        "admin",
-        "",
+        "Harry Potter L'apprenti sorcier",
+        "https://i.ibb.co/d7MH2PL/YumYum.jpg",
         "admin",
       ]
     );

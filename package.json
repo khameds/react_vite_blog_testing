@@ -12,10 +12,12 @@
     "dev-back": "npm --prefix ./api run dev",
     "cy:run": "cypress run",
     "cy:open": "cypress open",
+    "cy:report" : "cypress run --reporter mochawesome",
     "pm:run": "newman run newman/cat_blog_postman_collection_23_07.json",
     "pm:report": "newman run newman/cat_blog_postman_collection_23_07.json --reporters=cli,htmlextra",
     "jm:run": "jmeter -n -t jmeter/CatBlogApiTest.jmx -l /jmeter/results.csv",
-    "test": "TODO"
+    "percy:env" : "export PERCY_TOKEN=web_d8cf851350872c2d17af16b0ea64e3483f7a07aaabc2303d900a49e953e4ca2d",
+    "percy:run": "percy exec -- cypress run"
   },
   "keywords": [],
   "author": "",
