@@ -1,6 +1,7 @@
-# Reports from newman
+# Reports
 newman/*.html
 ~*
+cypress/reports/
 
 # Logs
 logs

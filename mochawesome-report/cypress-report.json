@@ -1,0 +1,143 @@
+{
+  "stats": {
+    "suites": 2,
+    "tests": 2,
+    "passes": 2,
+    "pending": 0,
+    "failures": 0,
+    "start": "2024-07-28T03:13:33.181Z",
+    "end": "2024-07-28T03:13:51.950Z",
+    "duration": 18769,
+    "testsRegistered": 2,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "2cbbaa8f-403e-4658-a078-37d18dcfaca8",
+      "title": "",
+      "fullFile": "cypress\\e2e\\blog_profile-page.cy.js",
+      "file": "cypress\\e2e\\blog_profile-page.cy.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "0b373e4f-147f-47ef-937d-1bafa505c45a",
+          "title": "Blog | Authentification user",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Profile page contains users' infos",
+              "fullTitle": "Blog | Authentification user Profile page contains users' infos",
+              "timedOut": null,
+              "duration": 8622,
+              "state": "passed",
+              "speed": "medium",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.contains(userFirstname);\ncy.contains(userLastname);",
+              "err": {},
+              "uuid": "29a4789f-fcad-4682-9293-b43f42332863",
+              "parentUUID": "0b373e4f-147f-47ef-937d-1bafa505c45a",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "29a4789f-fcad-4682-9293-b43f42332863"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 8622,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        },
+        {
+          "uuid": "da797dc1-2604-4dbd-a303-95ce55ce1827",
+          "title": "Blog | Authentification user",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Should display the \"Modifier mon mot de passe\" button",
+              "fullTitle": "Blog | Authentification user Should display the \"Modifier mon mot de passe\" button",
+              "timedOut": null,
+              "duration": 6742,
+              "state": "passed",
+              "speed": "medium",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.get('button:contains(\"Modifier mon mot de passe\")').click();",
+              "err": {},
+              "uuid": "4c4a6932-d10b-4c84-9c9c-516c9d9cbc40",
+              "parentUUID": "da797dc1-2604-4dbd-a303-95ce55ce1827",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "4c4a6932-d10b-4c84-9c9c-516c9d9cbc40"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 6742,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.0.1"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "cypress-report.html",
+        "saveHtml": true,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.3"
+    },
+    "marge": {
+      "options": {
+        "reportFilename": "cypress-report.html",
+        "reportPageTitle": "Cat's lovers' report",
+        "saveAllAttempts": false
+      },
+      "version": "6.2.0"
+    }
+  }
+}
