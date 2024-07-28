@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.0.1 (Python 3.12.4 on win32)" generated="2024-07-26T16:36:35.990852" rpa="false" schemaversion="5">
+<suite id="s1" name="Test" source="C:\Users\Wild Code School\Documents\Formation\Projet_final\react_vite_blog_testing\Robot_Framework\test.robot">
+<test id="s1-t1" name="Ouvrir Page from" line="9">
+<kw name="Open Browser" owner="SeleniumLibrary">
+<msg time="2024-07-26T16:36:36.868170" level="INFO">Opening browser 'Edge' to base url 'http://localhost:5174/'.</msg>
+<arg>${URL}</arg>
+<arg>${BROWSER}</arg>
+<doc>Opens a new browser instance to the optional ``url``.</doc>
+<status status="PASS" start="2024-07-26T16:36:36.868170" elapsed="15.019846"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2024-07-26T16:36:51.888016" level="INFO">Typing text 'admin@mail.com' into text field 'name=email'.</msg>
+<arg>name=email</arg>
+<arg>admin@mail.com</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2024-07-26T16:36:51.888016" elapsed="0.283658"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2024-07-26T16:36:52.171674" level="INFO">Typing text 'Azerty123!' into text field 'name=password'.</msg>
+<arg>name=password</arg>
+<arg>Azerty123!</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2024-07-26T16:36:52.171674" elapsed="0.158694"/>
+</kw>
+<kw name="Capture Page Screenshot" owner="SeleniumLibrary">
+<msg time="2024-07-26T16:36:52.472262" level="INFO" html="true">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="screenShots/commande.png"&gt;&lt;img src="screenShots/commande.png" width="800px"&gt;&lt;/a&gt;</msg>
+<arg>${SCREEN_DIR}/commande.png</arg>
+<doc>Takes a screenshot of the current page and embeds it into a log file.</doc>
+<status status="PASS" start="2024-07-26T16:36:52.331536" elapsed="0.140726"/>
+</kw>
+<kw name="Click Button" owner="SeleniumLibrary">
+<msg time="2024-07-26T16:36:52.472262" level="INFO">Clicking button 'Se connecter'.</msg>
+<arg>Se connecter</arg>
+<doc>Clicks the button identified by ``locator``.</doc>
+<status status="PASS" start="2024-07-26T16:36:52.472262" elapsed="0.118798"/>
+</kw>
+<kw name="Close Browser" owner="SeleniumLibrary">
+<doc>Closes the current browser.</doc>
+<status status="PASS" start="2024-07-26T16:36:52.593058" elapsed="2.607990"/>
+</kw>
+<doc>Se connecter</doc>
+<status status="PASS" start="2024-07-26T16:36:36.868170" elapsed="18.332878"/>
+</test>
+<status status="PASS" start="2024-07-26T16:36:35.990852" elapsed="19.210196"/>
+</suite>
+<statistics>
+<total>
+<stat pass="1" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat pass="1" fail="0" skip="0" id="s1" name="Test">Test</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>
