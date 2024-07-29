@@ -1,4 +1,4 @@
-name: Setup MySQL Database
+name: Workflow_cats_lovers
 
 on: [push]
 
@@ -35,3 +35,19 @@ jobs:
         mysql -e "CREATE USER IF NOT EXISTS '${{ secrets.DB_USER }}'@'%' IDENTIFIED BY '${{ secrets.DB_ROOT_PASSWORD }}';"
         mysql -e "GRANT ALL PRIVILEGES ON ${{ secrets.DB_NAME }}.* TO '${{ secrets.DB_USER }}'@'%';"
         mysql -e "FLUSH PRIVILEGES;"
+    
+    - name: Set up MySQL database
+      run: |
+        npm run setup
+        npm run db:migrate
+        npm run db:seed
+        npm run percy:env
+
+    - name: Run tests
+      run: |
+        npm run pm:run          #run Postman tests
+        npm run jm:run          #run JMeter tests
+        npm run cy:run          #run Cypress tests
+        npm run percy:run       #run Percy tests
+          
+        
