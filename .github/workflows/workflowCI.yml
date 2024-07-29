@@ -36,12 +36,11 @@ jobs:
         mysql -e "GRANT ALL PRIVILEGES ON ${{ secrets.DB_NAME }}.* TO '${{ secrets.DB_USER }}'@'%';"
         mysql -e "FLUSH PRIVILEGES;"
     
-    - name: Set up MySQL database
+    - name: Set up the project
       run: |
         npm run setup
         npm run db:migrate
         npm run db:seed
-        npm run percy:env
 
     - name: Run tests
       run: |
