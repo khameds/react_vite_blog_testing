@@ -26,18 +26,18 @@
 
 Cypress.Commands.add("signup", (firstName, lastName, email, password, pseudo, avatar) => {
     if(firstName)
-        cy.get("#firstName").type(firstName);
+        cy.get("#firstname").type(firstName);
     if(lastName)
-        cy.get("#lastName").type(lastName);
+        cy.get("#lastname").type(lastName);
     if(email)
         cy.get("#email").type(email);
     if(password)
-        cy.get("#spassword").type(password);
+        cy.get("#password").type(password);
     if(pseudo)
         cy.get("#pseudo").type(pseudo);
     if(avatar)
         cy.get("#avatar").type(avatar);
-    cy.get('button:contains("S\'enregistrer")').click();
+    cy.get('button:contains("Sinscrire")').click();
   });
   
   Cypress.Commands.add("signin", (email, password) => {

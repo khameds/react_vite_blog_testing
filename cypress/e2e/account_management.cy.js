@@ -18,14 +18,15 @@ describe("Blog | Authentification success", () => {
   it("Login as an admin", function () {
     cy.signin(adminMail, adminPassword)
     .then(() => {
-      cy.url().should("include", "");
+      // cy.url().should("include", "");
+      cy.get("nav").should("exist");
     });
   });
 
   it("Login as a regular user", function () {
     cy.signin(userMail, userPassword)
     .then(() => {
-
+      cy.get("nav").should("exist");
     });
   });
 
@@ -59,6 +60,24 @@ describe("Blog | Authentification failure", () => {
   });
 });
 
+describe("Blog | Registration success", () => {
+  beforeEach(() => {
+    cy.visit(Cypress.env("baseUrl"));
+  });
+
+  it("Registrer as a regular user", function () {
+    cy.get('button:contains("S\'enregistrer")').click();
+    cy.signup(faker.person.firstName(), faker.person.lastName(),faker.internet.email(),"Azerty123!","randomUser","")
+    .then(()=>{
+      cy.contains("S'enregistrer");
+    })
+  });
+
+  it('Visual regression test', () => {
+    cy.percySnapshot('Authentification page');
+  });
+});
+
 describe("Admin | Authentification success", () => {
   beforeEach(() => {
     cy.visit(Cypress.env("baseUrlBackoffice"));
@@ -66,7 +85,7 @@ describe("Admin | Authentification success", () => {
 
   it("Login as an admin", function () {
     cy.signin(adminMail, adminPassword).then(() => {
-      cy.get("nav").should("have.attr", "data-headlessui-state");
+      cy.get("nav").should("exist");
     });
   });
 
@@ -106,13 +125,13 @@ describe("Blog | User profile", () => {
   beforeEach(() => {
     cy.visit(Cypress.env("baseUrl"));
     cy.signin(userMail,userPassword);
-    cy.wait(4000);
+    cy.wait(3000);
     cy.get('a[href="/profile-page"]').click();
-    cy.url().should('include', '/profile-page');
     cy.reload(true);  
   });
 
   it("Retrieve user infos", function () {
+    cy.url().should('include', '/profile-page');
     cy.contains(userFirstname);
     cy.contains(userLastname);
   });

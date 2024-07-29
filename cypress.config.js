@@ -8,12 +8,19 @@ module.exports = defineConfig({
   e2e: {
     setupNodeEvents(on, config) {
       // implement node event listeners here
+      // require('cypress-mochawesome-reporter/plugin')(on);
     },
   },
   reporter: "cypress-mochawesome-reporter", 
   reporterOptions: {
-    reportFilename: "cypress-report.html",
+    // reportFilename: "cypress-report.html",
     reportPageTitle: "Cat's lovers' report",
-    saveAllAttempts: false,
+    // reportDir: "mochawesome-report/",
+    saveAllAttempts: true,
+    overwrite: false,
+    // embeddedScreenshots: true,
+    // inlineAssets: true,
+    // charts: true,
+    // screenshotsFolder: "mochawesome-report/assets"
   },
 });
